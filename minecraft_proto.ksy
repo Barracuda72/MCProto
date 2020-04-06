@@ -333,6 +333,7 @@ types:
             0x46: cb_entity_velocity
             0x47: cb_entity_equipment
             0x4E: cb_spawn_position
+            0x4F: cb_time_update
             0x59: cb_entity_properties
             0x5B: cb_declare_recipies
             0x5C: cb_tags
@@ -669,6 +670,12 @@ types:
       - id: location
         type: position
   
+  cb_time_update: # 0x4F
+    seq:
+      - id: world_age
+        type: s8
+      - id: time_of_day
+        type: s8
         
   cb_entity_properties: # 0x59
     seq:
