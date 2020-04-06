@@ -314,6 +314,7 @@ types:
             0x0B: cb_block_action
             0x0E: cb_server_difficulty
             0x12: cb_declare_commands
+            0x17: cb_set_slot
             0x19: csb_plugin_message
             0x1C: cb_entity_status
             0x21: csb_keepalive
@@ -419,6 +420,15 @@ types:
         repeat-expr: count.value
       - id: root_index
         type: var_int
+
+  cb_set_slot: # 0x17
+    seq:
+      - id: window_id
+        type: u1
+      - id: slot
+        type: s2
+      - id: data
+        type: slot
 
   csb_plugin_message: # 0x19 (cb), 0x0B (sb)
     seq:
