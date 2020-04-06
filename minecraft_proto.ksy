@@ -315,6 +315,7 @@ types:
             0x12: cb_declare_commands
             0x19: cb_plugin_message
             0x1C: cb_entity_status
+            0x21: csb_keepalive
             0x22: cb_chunk_data
             0x25: cb_update_light
             0x26: cb_play_join_game
@@ -347,6 +348,7 @@ types:
           cases:
             0x00: sb_teleport_confirm
             0x04: sb_client_status
+            0x0F: csb_keepalive
             0x11: sb_player_position
             0x12: sb_player_position_and_rotation
             0x13: sb_player_rotation
@@ -414,6 +416,11 @@ types:
         type: s4
       - id: entity_status
         type: u1
+
+  csb_keepalive: # 0x21 (cb), 0x0F (sb)
+    seq:
+      - id: keep_alive_id
+        type: s8
 
   cb_chunk_data: # 0x22
     seq:
