@@ -313,7 +313,7 @@ types:
             0x03: cb_spawn_living_entity
             0x0E: cb_server_difficulty
             0x12: cb_declare_commands
-            0x19: cb_plugin_message
+            0x19: csb_plugin_message
             0x1C: cb_entity_status
             0x21: csb_keepalive
             0x22: cb_chunk_data
@@ -348,6 +348,7 @@ types:
           cases:
             0x00: sb_teleport_confirm
             0x04: sb_client_status
+            0x0B: csb_plugin_message
             0x0F: csb_keepalive
             0x11: sb_player_position
             0x12: sb_player_position_and_rotation
@@ -401,7 +402,7 @@ types:
       - id: root_index
         type: var_int
 
-  cb_plugin_message: # 0x19
+  csb_plugin_message: # 0x19 (cb), 0x0B (sb)
     seq:
       - id: channel
         type: string
