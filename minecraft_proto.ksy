@@ -59,7 +59,7 @@ seq:
   - id: a_23 # Update light & load chunk data, also gameplay packets
     type: packet_w(true, game_state::play)
     repeat: expr
-    repeat-expr: 200
+    repeat-expr: 2
     
 ####################################
     
@@ -1091,22 +1091,22 @@ types:
         type: string # 16 chars max
       - id: number_of_properties
         type: var_int
-        if: action == 0 # player_list_action::add
+        if: action == player_list_action::add.to_i
       - id: properties
         type: player_property
         repeat: expr
         repeat-expr: number_of_properties.value
-        if: action == 0 # player_list_action::add
+        if: action == player_list_action::add.to_i
       - id: game_mode
         type: var_int
         # enum: game_mode
-        if: action == 0 or action == 1 # player_list_action::add or player_list_action::update_gamemode
+        if: action == player_list_action::add.to_i or action == player_list_action::update_gamemode.to_i
       - id: ping
         type: var_int
-        if: action == 0 or action == 2 # player_list_action::add or player_list_action::update_ping
+        if: action == player_list_action::add.to_i or action == player_list_action::update_ping.to_i
       - id: display_name
         type: player_display_name
-        if: action == 0 or action == 3 # player_list_action::add or player_list_action::update_display_name
+        if: action == player_list_action::add.to_i or action == player_list_action::update_display_name.to_i
         
   player_property:
     seq:
@@ -1264,13 +1264,13 @@ types:
         # enum: particle_id
       - id: block_state
         type: var_int
-        if: id.value == 3 or id.value == 23 # id == particle_id::block or id == particle_id::falling_dust
+        if: id.value == particle_id::block.to_i or id.value == particle_id::falling_dust.to_i
       - id: color
         type: color
-        if: id.value == 14 # id == particle_id::dust
+        if: id.value == particle_id::dust.to_i
       - id: item
         type: slot
-        if: id.value == 32 # id == particle_id::item
+        if: id.value == particle_id::item.to_i
         
   color:
     seq:
