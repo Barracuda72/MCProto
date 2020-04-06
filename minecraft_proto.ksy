@@ -59,7 +59,7 @@ seq:
   - id: a_23 # Update light & load chunk data, also gameplay packets
     type: packet_w(true, game_state::play)
     repeat: expr
-    repeat-expr: 2
+    repeat-expr: 900
     
 ####################################
     
@@ -314,6 +314,7 @@ types:
             0x0B: cb_block_action
             0x0E: cb_server_difficulty
             0x12: cb_declare_commands
+            0x15: cb_window_items
             0x17: cb_set_slot
             0x19: csb_plugin_message
             0x1C: cb_entity_status
@@ -421,6 +422,17 @@ types:
         repeat-expr: count.value
       - id: root_index
         type: var_int
+        
+  cb_window_items: # 0x15
+    seq:
+      - id: window_id
+        type: u1
+      - id: count
+        type: s2
+      - id: data
+        type: slot
+        repeat: expr
+        repeat-expr: count
 
   cb_set_slot: # 0x17
     seq:
