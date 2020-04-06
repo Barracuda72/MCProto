@@ -59,7 +59,7 @@ seq:
   - id: a_23 # Update light & load chunk data, also gameplay packets
     type: packet_w(true, game_state::play)
     repeat: expr
-    repeat-expr: 200
+    repeat-expr: 2
     
 ####################################
     
@@ -318,10 +318,14 @@ types:
             0x22: cb_chunk_data
             0x25: cb_update_light
             0x26: cb_play_join_game
+            0x29: cb_entity_position
+            0x2A: cb_entity_position_and_rotation
+            0x2B: cb_entity_rotation
             0x32: cb_player_abilities
             0x34: cb_player_info
             0x36: cb_player_position_and_look
             0x37: cb_unlock_recipies
+            0x3C: cb_entity_head_look
             0x3E: cb_world_border
             0x40: cb_held_item_change
             0x41: cb_update_view_position
@@ -484,6 +488,39 @@ types:
       - id: enable_spawn_screen 
         type: bool
         
+  cb_entity_position: # 0x29
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: position_delta
+        type: vec3s_xyz
+      - id: is_on_ground
+        type: bool
+    
+  cb_entity_position_and_rotation: # 0x2A
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: position_delta
+        type: vec3s_xyz
+      - id: yaw
+        type: angle
+      - id: pitch
+        type: angle
+      - id: is_on_ground
+        type: bool
+        
+  cb_entity_rotation: # 0x2B
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: yaw
+        type: angle
+      - id: pitch
+        type: angle
+      - id: is_on_ground
+        type: bool
+        
   cb_player_abilities: # 0x32
     seq:
       - id: is_invulterable
@@ -557,6 +594,13 @@ types:
         repeat-expr: extra_recipes_count.value
         if: action.value == 0
         
+  cb_entity_head_look: # 0x3C
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: head_yaw
+        type: angle
+      
   cb_world_border: # 0x3E
     seq:
       - id: action
@@ -580,7 +624,6 @@ types:
       - id: warning_blocks
         type: var_int
         if: action.value == world_border_action::set_warning_blocks.to_i
-        
         
   cb_held_item_change: # 0x40
     seq:
