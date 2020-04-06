@@ -59,7 +59,7 @@ seq:
   - id: a_23 # Update light & load chunk data, also gameplay packets
     type: packet_w(true, game_state::play)
     repeat: expr
-    repeat-expr: 2
+    repeat-expr: 200
     
 ####################################
     
@@ -345,6 +345,9 @@ types:
           cases:
             0x00: sb_teleport_confirm
             0x04: sb_client_status
+            0x11: sb_player_position
+            0x12: sb_player_position_and_rotation
+            0x13: sb_player_rotation
             _: uncompressed_data
 
   cb_spawn_living_entity: # 0x03
@@ -710,6 +713,33 @@ types:
       - id: action_id
         type: var_int
         # enum: client_status_action
+        
+  sb_player_position: # 0x11
+    seq:
+      - id: position
+        type: vec3d_xyz
+      - id: is_on_ground
+        type: bool
+    
+  sb_player_position_and_rotation: # 0x12
+    seq:
+      - id: position
+        type: vec3d_xyz
+      - id: yaw
+        type: f4
+      - id: pitch
+        type: f4
+      - id: is_on_ground
+        type: bool
+    
+  sb_player_rotation: # 0x13
+    seq:
+      - id: yaw
+        type: f4
+      - id: pitch
+        type: f4
+      - id: is_on_ground
+        type: bool
 
 ####################################
 
@@ -749,6 +779,15 @@ types:
   vec2d_xz:
     seq:
       - id: x
+        type: f8
+      - id: z
+        type: f8
+        
+  vec3d_xyz:
+    seq:
+      - id: x
+        type: f8
+      - id: y
         type: f8
       - id: z
         type: f8
