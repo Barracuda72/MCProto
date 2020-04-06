@@ -341,6 +341,7 @@ types:
             0x4E: cb_spawn_position
             0x4F: cb_time_update
             0x52: cb_sound_effect
+            0x56: cb_collect_item
             0x58: cb_advancements
             0x59: cb_entity_properties
             0x5B: cb_declare_recipies
@@ -756,6 +757,15 @@ types:
       - id: pitch
         type: f4
         
+  cb_collect_item: # 0x56
+    seq:
+      - id: collected_entity_id
+        type: var_int
+      - id: collector_entity_id
+        type: var_int
+      - id: pickup_item_count
+        type: var_int
+      
   cb_advancements: # 0x58
     seq:
       - id: reset
