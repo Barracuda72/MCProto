@@ -349,6 +349,7 @@ types:
           cases:
             0x00: sb_teleport_confirm
             0x04: sb_client_status
+            0x05: sb_client_settings
             0x0B: csb_plugin_message
             0x0F: csb_keepalive
             0x11: sb_player_position
@@ -756,6 +757,23 @@ types:
       - id: action_id
         type: var_int
         # enum: client_status_action
+        
+  sb_client_settings: # 0x05
+    seq:
+      - id: locale 
+        type: string
+      - id: view_distance 
+        type: u1
+      - id: chat_mode 
+        type: var_int 
+        #enum: chat_mode
+      - id: chat_colors 
+        type: bool
+      - id: displayed_skin_parts 
+        type: displayed_skin_parts
+      - id: main_hand 
+        type: var_int 
+        #enum: main_hand
         
   sb_player_position: # 0x11
     seq:
@@ -1402,6 +1420,25 @@ types:
         type: var_int
       - id: warning_blocks
         type: var_int
+  
+  displayed_skin_parts:
+    seq:
+      - id: cape_enabled
+        type: b1
+      - id: jacket_enabled
+        type: b1
+      - id: left_sleeve_enabled
+        type: b1
+      - id: right_sleeve_enabled
+        type: b1
+      - id: left_leg_enabled
+        type: b1
+      - id: right_leg_enabled
+        type: b1
+      - id: hat_enabled
+        type: b1
+      - id: reserved
+        type: b1
         
 ### Enums      
 
@@ -1487,3 +1524,10 @@ enums:
   client_status_action:
     0: perform_respawn
     1: request_stats
+  main_hand:
+    0: left
+    1: right
+  chat_mode:
+    0: enabled
+    1: commands_only
+    2: hidden
