@@ -360,6 +360,7 @@ types:
             0x12: sb_player_position_and_rotation
             0x13: sb_player_rotation
             0x14: sb_player_movement
+            0x17: sb_pick_item
             _: uncompressed_data
 
   cb_spawn_living_entity: # 0x03
@@ -713,11 +714,11 @@ types:
   cb_update_health: # 0x49
     seq:
       - id: health
-        type: float
+        type: f4
       - id: food
         type: var_int
       - id: saturation
-        type: float
+        type: f4
         
   cb_spawn_position: # 0x4E
     seq:
@@ -860,6 +861,11 @@ types:
     seq:
       - id: is_on_ground
         type: bool
+        
+  sb_pick_item: # 0x17
+    seq:
+      - id: slot
+        type: var_int
 
 ####################################
 
