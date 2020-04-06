@@ -59,7 +59,7 @@ seq:
   - id: a_23 # Update light & load chunk data, also gameplay packets
     type: packet_w(true, game_state::play)
     repeat: expr
-    repeat-expr: 2
+    repeat-expr: 200
     
 ####################################
     
@@ -326,6 +326,7 @@ types:
             0x40: cb_held_item_change
             0x41: cb_update_view_position
             0x44: cb_entity_metadata
+            0x46: cb_entity_velocity
             0x47: cb_entity_equipment
             0x4E: cb_spawn_position
             0x59: cb_entity_properties
@@ -568,7 +569,7 @@ types:
         type: world_border_lerp_data
         if: action.value == world_border_action::lerp_size.to_i
       - id: center
-        type: vec2d
+        type: vec2d_xz
         if: action.value == world_border_action::set_center.to_i
       - id: init_data
         type: world_border_init_data
@@ -599,6 +600,13 @@ types:
         type: var_int
       - id: metadata
         type: enity_metadata
+        
+  cb_entity_velocity: # 0x46
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: velocity
+        type: vec3s_xyz
         
   cb_entity_equipment: # 0x47
     seq:
@@ -695,12 +703,21 @@ types:
       - id: value
         type: u1
         
-  vec2d:
+  vec2d_xz:
     seq:
       - id: x
         type: f8
       - id: z
         type: f8
+        
+  vec3s_xyz:
+    seq:
+      - id: x
+        type: s2
+      - id: y
+        type: s2
+      - id: z
+        type: s2
         
 ### Crafting-related
         
@@ -1237,7 +1254,7 @@ types:
   world_border_init_data:
     seq:
       - id: center
-        type: vec2d
+        type: vec2d_xz
       - id: lerp_data
         type: world_border_lerp_data
       - id: portal_teleport_boundary
