@@ -334,6 +334,7 @@ types:
             0x47: cb_entity_equipment
             0x4E: cb_spawn_position
             0x4F: cb_time_update
+            0x52: cb_sound_effect
             0x59: cb_entity_properties
             0x5B: cb_declare_recipies
             0x5C: cb_tags
@@ -677,6 +678,20 @@ types:
       - id: time_of_day
         type: s8
         
+  cb_sound_effect: # 0x52
+    seq:
+      - id: sound_id
+        type: var_int
+      - id: sound_category
+        type: var_int
+        # enum: sound_categories
+      - id: effect_position
+        type: vec3i_xyz
+      - id: volume
+        type: f4
+      - id: pitch
+        type: f4
+        
   cb_entity_properties: # 0x59
     seq:
       - id: entity_id
@@ -807,6 +822,15 @@ types:
         type: s2
       - id: z
         type: s2
+        
+  vec3i_xyz:
+    seq:
+      - id: x
+        type: s4
+      - id: y
+        type: s4
+      - id: z
+        type: s4
         
 ### Crafting-related
         
