@@ -311,6 +311,7 @@ types:
           switch-on: _parent.packet_id.value
           cases:
             0x03: cb_spawn_living_entity
+            0x0B: cb_block_action
             0x0E: cb_server_difficulty
             0x12: cb_declare_commands
             0x19: csb_plugin_message
@@ -382,6 +383,17 @@ types:
         type: s2
       - id: velocity_z 
         type: s2
+
+  cb_block_action: # 0x0B
+    seq:
+      - id: location
+        type: position
+      - id: action_id
+        type: u1
+      - id: action_param
+        type: u1
+      - id: block_type
+        type: var_int
 
   cb_server_difficulty: # 0x0E
     seq:
