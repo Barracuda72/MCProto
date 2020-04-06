@@ -3,6 +3,7 @@ meta:
   file-extension: mcproto
   imports:
     - var_int
+    - var_long
     - minecraft_nbt
   endian: be
 
@@ -55,10 +56,10 @@ seq:
     type: packet_w(true, game_state::play)
   - id: a_22 # Set View position
     type: packet_w(true, game_state::play)
-  - id: a_23 # Update light & load chunk data
+  - id: a_23 # Update light & load chunk data, also gameplay packets
     type: packet_w(true, game_state::play)
     repeat: expr
-    repeat-expr: 200
+    repeat-expr: 2
     
 ####################################
     
@@ -321,10 +322,12 @@ types:
             0x34: cb_player_info
             0x36: cb_player_position_and_look
             0x37: cb_unlock_recipies
+            0x3E: cb_world_border
             0x40: cb_held_item_change
             0x41: cb_update_view_position
             0x44: cb_entity_metadata
             0x47: cb_entity_equipment
+            0x4E: cb_spawn_position
             0x59: cb_entity_properties
             0x5B: cb_declare_recipies
             0x5C: cb_tags
@@ -335,6 +338,8 @@ types:
         type:
           switch-on: _parent.packet_id.value
           cases:
+            0x00: sb_teleport_confirm
+            0x04: sb_client_status
             _: uncompressed_data
 
   cb_spawn_living_entity: # 0x03
@@ -551,6 +556,31 @@ types:
         repeat-expr: extra_recipes_count.value
         if: action.value == 0
         
+  cb_world_border: # 0x3E
+    seq:
+      - id: action
+        type: var_int
+        # enum: world_border_action
+      - id: diameter
+        type: f8
+        if: action.value == world_border_action::set_size.to_i
+      - id: lerp_data
+        type: world_border_lerp_data
+        if: action.value == world_border_action::lerp_size.to_i
+      - id: center
+        type: vec2d
+        if: action.value == world_border_action::set_center.to_i
+      - id: init_data
+        type: world_border_init_data
+        if: action.value == world_border_action::initialize.to_i
+      - id: warning_time
+        type: var_int
+        if: action.value == world_border_action::set_warning_time.to_i
+      - id: warning_blocks
+        type: var_int
+        if: action.value == world_border_action::set_warning_blocks.to_i
+        
+        
   cb_held_item_change: # 0x40
     seq:
       - id: slot
@@ -579,6 +609,12 @@ types:
         # enum: slot
       - id: item
         type: slot
+        
+  cb_spawn_position: # 0x4E
+    seq:
+      - id: location
+        type: position
+  
         
   cb_entity_properties: # 0x59
     seq:
@@ -610,6 +646,19 @@ types:
         type: tag_array
       - id: entity_tags
         type: tag_array
+
+### Serverbound play packets
+
+  sb_teleport_confirm: # 0x00
+    seq:
+      - id: teleport_id
+        type: var_int
+        
+  sb_client_status: # 0x04
+    seq:
+      - id: action_id
+        type: var_int
+        # enum: client_status_action
 
 ####################################
 
@@ -645,6 +694,13 @@ types:
     seq:
       - id: value
         type: u1
+        
+  vec2d:
+    seq:
+      - id: x
+        type: f8
+      - id: z
+        type: f8
         
 ### Crafting-related
         
@@ -1169,6 +1225,28 @@ types:
         type: u1
         enum: entity_modifier_operation
         
+  world_border_lerp_data:
+    seq:
+      - id: old_diameter
+        type: f8
+      - id: new_diameter
+        type: f8
+      - id: speed
+        type: var_long
+        
+  world_border_init_data:
+    seq:
+      - id: center
+        type: vec2d
+      - id: lerp_data
+        type: world_border_lerp_data
+      - id: portal_teleport_boundary
+        type: var_int
+      - id: warning_time
+        type: var_int
+      - id: warning_blocks
+        type: var_int
+        
 ### Enums      
 
 enums:
@@ -1243,3 +1321,13 @@ enums:
     0: add_amount
     1: add_percent
     2: mult_percent
+  world_border_action:
+    0: set_size
+    1: lerp_size
+    2: set_center
+    3: initialize
+    4: set_warning_time
+    5: set_warning_blocks
+  client_status_action:
+    0: perform_respawn
+    1: request_stats
