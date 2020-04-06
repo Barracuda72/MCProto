@@ -10,59 +10,72 @@ meta:
   
 seq:
   - id: a_0 # SB Handshake
-    type: packet(false, true, game_state::handshake)
+    type: packet_w(false, game_state::handshake)
   - id: a_1 # SB Request
-    type: packet(false, true, game_state::status)
+    type: packet_w(false, game_state::status)
   - id: a_2 # SB Response
-    type: packet(false, false, game_state::status)
-#  - id: a_3 # CB Ping
-#    type: packet(false, true, game_state::status)
-#  - id: a_4 # SB Ping
-#    type: packet(false, false, game_state::status)
+    type: packet_w(false, game_state::status)
+  - id: a_3 # CB Ping
+    type: packet_w(false, game_state::status)
+  - id: a_4 # SB Ping
+    type: packet_w(false, game_state::status)
   - id: a_5 # SB Handshake
-    type: packet(false, true, game_state::handshake)
+    type: packet_w(false, game_state::handshake)
   - id: a_6 # SB Login Start
-    type: packet(false, true, game_state::login)
+    type: packet_w(false, game_state::login)
   - id: a_7 # CB Set Compression
-    type: packet(false, false, game_state::login)
+    type: packet_w(false, game_state::login)
   - id: a_8 # CB Login Success
-    type: packet(true, false, game_state::login)
+    type: packet_w(true, game_state::login)
   - id: a_9 # CB Play Join Game
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)  
   - id: a_10 # CB Plugin Message
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_11 # CB Server Difficulty
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_12 # CB Player Abilities
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_13 # CB Held Item Change
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_14 # CB Declare Recipies
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_15 # CB Tags
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_16 # CB Entity Status
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_17 # CB Declare Commands
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_18 # CB Unlock Recipies
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_19 # Player position and look
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_20 # Update Player List
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_21 # Update Player List (latency)
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_22 # Set View position
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
   - id: a_23 # Update light & load chunk data
-    type: packet(true, false, game_state::play)
+    type: packet_w(true, game_state::play)
     repeat: expr
-    repeat-expr: 100
+    repeat-expr: 200
     
 ####################################
     
 types:
+
+  packet_w:
+    params:
+      - id: compressed
+        type: bool
+      - id: game_state
+        type: u1
+        enum: game_state
+    seq:
+      - id: serverbound
+        type: u1
+      - id: packet
+        type: packet(compressed, serverbound == 1, game_state)
 
   packet:
     params:
