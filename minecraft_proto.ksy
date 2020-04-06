@@ -350,6 +350,7 @@ types:
             0x11: sb_player_position
             0x12: sb_player_position_and_rotation
             0x13: sb_player_rotation
+            0x14: sb_player_movement
             _: uncompressed_data
 
   cb_spawn_living_entity: # 0x03
@@ -760,6 +761,11 @@ types:
         type: f4
       - id: pitch
         type: f4
+      - id: is_on_ground
+        type: bool
+        
+  sb_player_movement: # 0x14
+    seq:
       - id: is_on_ground
         type: bool
 
