@@ -337,6 +337,7 @@ types:
             0x4E: cb_spawn_position
             0x4F: cb_time_update
             0x52: cb_sound_effect
+            0x58: cb_advancements
             0x59: cb_entity_properties
             0x5B: cb_declare_recipies
             0x5C: cb_tags
@@ -714,6 +715,29 @@ types:
       - id: pitch
         type: f4
         
+  cb_advancements: # 0x58
+    seq:
+      - id: reset
+        type: bool
+      - id: mapping_size
+        type: var_int
+      - id: advancement_mapping
+        type: advancement_mapping
+        repeat: expr
+        repeat-expr: mapping_size.value
+      - id: list_size
+        type: var_int
+      - id: identifiers
+        type: string
+        repeat: expr
+        repeat-expr: list_size.value
+      - id: progress_size
+        type: var_int
+      - id: progress_mapping
+        type: progress_mapping
+        repeat: expr
+        repeat-expr: progress_size.value
+  
   cb_entity_properties: # 0x59
     seq:
       - id: entity_id
@@ -841,6 +865,13 @@ types:
     seq:
       - id: value
         type: u1
+        
+  vec2f_xy:
+    seq:
+      - id: x
+        type: f4
+      - id: y
+        type: f4
         
   vec2d_xz:
     seq:
@@ -1439,7 +1470,119 @@ types:
         type: b1
       - id: reserved
         type: b1
+
+### Advancements
+
+  advancement_mapping:
+    seq:
+      - id: key
+        type: string
+      - id: value
+        type: advancement_structure
         
+  progress_mapping:
+    seq:
+      - id: key
+        type: string
+      - id: value
+        type: advancement_progress
+
+  advancement_structure:
+    seq:
+      - id: has_parent 
+        type: bool
+      - id: parent_id 
+        type: string
+        if: has_parent.value != 0
+      - id: has_display 
+        type: bool
+      - id: display_data 
+        type: advancement_display
+        if: has_display.value != 0
+      - id: number_of_criteria 
+        type: var_int
+      - id: criteria 
+        type: advancement_structure_criteria 
+        repeat: expr
+        repeat-expr: number_of_criteria.value
+      - id: number_of_requirements 
+        type: var_int
+      - id: requirements 
+        type: advancement_structure_requirement 
+        repeat: expr
+        repeat-expr: number_of_requirements.value
+      
+  advancement_structure_requirement:
+    seq:
+      - id: length
+        type: var_int
+      - id: data
+        type: string
+        repeat: expr
+        repeat-expr: length.value
+    
+  advancement_structure_criteria:
+    seq:
+      - id: key
+        type: string
+      - id: value
+        #type: none
+        size: 0
+
+  advancement_display:
+    seq:
+      - id: title 
+        type: string
+      - id: description 
+        type: string
+      - id: icon 
+        type: slot
+      - id: frame_type 
+        type: var_int 
+        #enum: advancement_diplay_frame_type
+      - id: flags 
+        type: advancement_diplay_flags
+      - id: background_texture 
+        type: string 
+        if: flags.has_background
+      - id: coord 
+        type: vec2f_xy
+
+  advancement_diplay_flags:
+    seq:
+      - id: has_background
+        type: b1
+      - id: show_toast
+        type: b1
+      - id: hidden
+        type: b1
+      - id: reserved
+        type: b5
+
+  advancement_progress:
+    seq:
+      - id: size
+        type: var_int
+      - id: criteria
+        type: advancement_progress_criteria
+        repeat: expr
+        repeat-expr: size.value
+
+  advancement_progress_criteria:
+    seq:
+      - id: identifier
+        type: string
+      - id: progress
+        type: criterion_progress
+
+  criterion_progress:
+    seq:
+      - id: achieved
+        type: bool
+      - id: date_of_achieving
+        type: s8
+        if: achieved.value != 0
+
 ### Enums      
 
 enums:
@@ -1531,3 +1674,7 @@ enums:
     0: enabled
     1: commands_only
     2: hidden
+  advancement_diplay_frame_type:
+    0: task
+    1: challenge
+    2: goal
