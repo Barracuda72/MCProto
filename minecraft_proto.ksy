@@ -336,6 +336,7 @@ types:
             0x46: cb_entity_velocity
             0x47: cb_entity_equipment
             0x48: cb_set_experience
+            0x49: cb_update_health
             0x4E: cb_spawn_position
             0x4F: cb_time_update
             0x52: cb_sound_effect
@@ -708,7 +709,16 @@ types:
         type: var_int
       - id: total_experience
         type: var_int
-  
+        
+  cb_update_health: # 0x49
+    seq:
+      - id: health
+        type: float
+      - id: food
+        type: var_int
+      - id: saturation
+        type: float
+        
   cb_spawn_position: # 0x4E
     seq:
       - id: location
