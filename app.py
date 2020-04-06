@@ -22,14 +22,36 @@ class Application(object):
             except Exception as e:
                 print ("Can't parse command line: {}".format(e))
 
-        self.proxy = TcpProxy(self.server_host, self.server_port, self.proxy_host, self.proxy_port, self.hexdump)
+        self.proxy = TcpProxy(self.server_host, self.server_port, self.proxy_host, self.proxy_port, self.mc_packet)
 
     def run(self):
         self.file = open(self.dump_filename, "wb")
         self.proxy.run()
         self.file.close()
 
-    def hexdump(self, data, length=16):
+    def decode_varint(self, data):
+        result = 0
+        size = 0
+        while True:
+            i = data[size]
+            result |= (i & 0x7f) << (7 * size)
+            size += 1
+            if not (i & 0x80):
+                break
+
+        return (result, size)
+
+    def mc_packet(self, serverbound, data):
+        offset = 0
+        total_size = len(data)
+
+        while offset < total_size:
+            size = sum(self.decode_varint(data[offset:]))
+            self.hexdump(serverbound, data[offset:offset+size])
+            offset += size
+
+    def hexdump(self, serverbound, data, length=16):
+        self.file.write(bytes([serverbound]))
         self.file.write(data)
         filter = ''.join([(len(repr(chr(x))) == 3) and chr(x) or '.' for x in range(256)])
         lines = []
@@ -39,6 +61,7 @@ class Application(object):
             hex = ' '.join(["%0*x" % (digits, (x)) for x in chars])
             printable = ''.join(["%s" % (((x) <= 127 and filter[(x)]) or '.') for x in chars])
             lines.append("%04x  %-*s  %s\n" % (c, length*3, hex, printable))
+        print('Serverbound: {}'.format(serverbound))
         print(''.join(lines))
 
 if (__name__ == '__main__'):

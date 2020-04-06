@@ -3,6 +3,7 @@
 import socket
 import select
 import errno
+from collections import defaultdict
 
 class TcpProxy(object):
     def __init__(self, server_host, server_port, proxy_host, proxy_port, handler=None):
@@ -17,6 +18,7 @@ class TcpProxy(object):
         self.buffer_size = 2048
 
         self.connections_map = {}
+        self.serverbound = defaultdict(lambda: False)
 
     def run(self):
         print ("Starting TCP proxy on {}:{}".format(self.proxy_host, self.proxy_port))
@@ -47,6 +49,7 @@ class TcpProxy(object):
                             client.setblocking(0)
                             self.connections_map[client] = rserver
                             self.connections_map[rserver] = client
+                            self.serverbound[client] = True
                         else:
                             print ("Can't establish connection to server, closing connection")
                             client.close()
@@ -56,7 +59,7 @@ class TcpProxy(object):
                         if (len(data) > 0):
                             # Process data
                             if (self.handler):
-                                self.handler(data) # TODO
+                                self.handler(self.serverbound[s], data) # TODO
                             # Send data
                             self.send(s, data)
                         else:
