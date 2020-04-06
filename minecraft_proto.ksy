@@ -59,7 +59,17 @@ seq:
   - id: a_23 # Update light & load chunk data, also gameplay packets
     type: packet_w(true, game_state::play)
     repeat: expr
-    repeat-expr: 900
+    repeat-expr: 905
+  - id: a_24 # SB Handshake
+    type: packet_w(false, game_state::handshake)
+  - id: a_25 # SB Request
+    type: packet_w(false, game_state::status)
+  - id: a_26 # SB Response
+    type: packet_w(false, game_state::status)
+  - id: a_27 # CB Ping
+    type: packet_w(false, game_state::status)
+  - id: a_28 # SB Ping
+    type: packet_w(false, game_state::status)
     
 ####################################
     
