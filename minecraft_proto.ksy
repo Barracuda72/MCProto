@@ -1454,21 +1454,21 @@ types:
   
   displayed_skin_parts:
     seq:
-      - id: cape_enabled
-        type: b1
-      - id: jacket_enabled
-        type: b1
-      - id: left_sleeve_enabled
-        type: b1
-      - id: right_sleeve_enabled
-        type: b1
-      - id: left_leg_enabled
-        type: b1
-      - id: right_leg_enabled
+      - id: reserved
         type: b1
       - id: hat_enabled
         type: b1
-      - id: reserved
+      - id: right_leg_enabled
+        type: b1
+      - id: left_leg_enabled
+        type: b1
+      - id: right_sleeve_enabled
+        type: b1
+      - id: left_sleeve_enabled
+        type: b1
+      - id: jacket_enabled
+        type: b1
+      - id: cape_enabled
         type: b1
 
 ### Advancements
@@ -1550,14 +1550,14 @@ types:
 
   advancement_diplay_flags:
     seq:
-      - id: has_background
+      - id: reserved
+        type: b5
+      - id: hidden
         type: b1
       - id: show_toast
         type: b1
-      - id: hidden
+      - id: has_background
         type: b1
-      - id: reserved
-        type: b5
 
   advancement_progress:
     seq:
