@@ -327,6 +327,7 @@ types:
             0x34: cb_player_info
             0x36: cb_player_position_and_look
             0x37: cb_unlock_recipies
+            0x38: cb_destroy_entities
             0x3C: cb_entity_head_look
             0x3E: cb_world_border
             0x40: cb_held_item_change
@@ -334,6 +335,7 @@ types:
             0x44: cb_entity_metadata
             0x46: cb_entity_velocity
             0x47: cb_entity_equipment
+            0x48: cb_set_experience
             0x4E: cb_spawn_position
             0x4F: cb_time_update
             0x52: cb_sound_effect
@@ -622,6 +624,15 @@ types:
         repeat-expr: extra_recipes_count.value
         if: action.value == 0
         
+  cb_destroy_entities: # 0x38
+    seq:
+      - id: count
+        type: var_int
+      - id: entity_ids
+        type: var_int
+        repeat: expr
+        repeat-expr: count.value
+    
   cb_entity_head_look: # 0x3C
     seq:
       - id: entity_id
@@ -689,6 +700,15 @@ types:
       - id: item
         type: slot
         
+  cb_set_experience: # 0x48
+    seq:
+      - id: experience_bar
+        type: f4
+      - id: level
+        type: var_int
+      - id: total_experience
+        type: var_int
+  
   cb_spawn_position: # 0x4E
     seq:
       - id: location
