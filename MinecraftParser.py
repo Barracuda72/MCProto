@@ -115,12 +115,17 @@ class MinecraftParser(object):
 
             part = data[offset:offset+size]
 
-            io = KaitaiStream(BytesIO(part))
-            packet = MinecraftProto.Packet(self.compression_active, serverbound, self.game_state, io)
+            known = False
 
-            known = self.dump_packet(packet)
+            try:
+                io = KaitaiStream(BytesIO(part))
+                packet = MinecraftProto.Packet(self.compression_active, serverbound, self.game_state, io)
 
-            self.switch_state(packet)
+                known = self.dump_packet(packet)
+
+                self.switch_state(packet)
+            except Exception as e:
+                print ("FAILED to parse following packet: {}".format(e))
 
             if not known:
                 self.hexdump(serverbound, part)
