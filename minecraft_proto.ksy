@@ -1780,17 +1780,17 @@ types:
         type: var_int 
         #enum: advancement_diplay_frame_type
       - id: flags 
-        type: advancement_diplay_flags
+        type: advancement_display_flags
       - id: background_texture 
         type: string 
         if: flags.has_background
       - id: coord 
         type: vec2f_xy
 
-  advancement_diplay_flags:
+  advancement_display_flags:
     seq:
       - id: reserved
-        type: b5
+        type: b29
       - id: hidden
         type: b1
       - id: show_toast
