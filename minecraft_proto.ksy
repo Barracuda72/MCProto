@@ -326,6 +326,7 @@ types:
             0x0B: cb_block_action
             0x0C: cb_block_change
             0x0E: cb_server_difficulty
+            0x0F: cb_chat_message
             0x12: cb_declare_commands
             0x15: cb_window_items
             0x17: cb_set_slot
@@ -457,6 +458,14 @@ types:
         enum: server_difficulty
       - id: locked
         type: bool
+        
+  cb_chat_message: # 0x0F
+    seq:
+      - id: data
+        type: string
+      - id: channel
+        type: u1
+        enum: chat_channel
 
   cb_declare_commands: # 0x12
     seq:
@@ -1971,3 +1980,7 @@ enums:
     6: northeast
     7: north
     8: northwest
+  chat_channel:
+    0: chat
+    1: system
+    2: game_info
