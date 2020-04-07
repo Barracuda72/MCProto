@@ -41,7 +41,12 @@ class MinecraftParser(object):
         packet_id, data = self.get_payload(packet)
         print ("Packet {} (ID 0x{:02x})".format(type(data).__name__, packet_id))
 
-        self.dump(data)
+        if (isinstance(data, MinecraftProto.UncompressedData)):
+            return False
+        else:
+            self.dump(data)
+            print ('')
+            return True
 
     def dump(self, obj, level = 0):
         padding = 4 * level * ' '
@@ -112,11 +117,14 @@ class MinecraftParser(object):
 
             io = KaitaiStream(BytesIO(part))
             packet = MinecraftProto.Packet(self.compression_active, serverbound, self.game_state, io)
-            self.dump_packet(packet)
+
+            known = self.dump_packet(packet)
 
             self.switch_state(packet)
 
-            self.hexdump(serverbound, part)
+            if not known:
+                self.hexdump(serverbound, part)
+
             offset += size
 
     def hexdump(self, serverbound, data, length=16):
