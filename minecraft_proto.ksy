@@ -329,6 +329,7 @@ types:
             0x0C: cb_block_change
             0x0E: cb_server_difficulty
             0x0F: cb_chat_message
+            0x10: cb_multi_block_change
             0x12: cb_declare_commands
             0x15: cb_window_items
             0x17: cb_set_slot
@@ -497,6 +498,17 @@ types:
       - id: channel
         type: u1
         enum: chat_channel
+  
+  cb_multi_block_change: # 0x10
+    seq:
+      - id: coords
+        type: vec2i_xz
+      - id: record_count
+        type: var_int
+      - id: records
+        type: block_change_record
+        repeat: expr
+        repeat-expr: record_count.value
 
   cb_declare_commands: # 0x12
     seq:
@@ -1720,6 +1732,17 @@ types:
         type: int
       - id: message 
         type: string
+
+  block_change_record:
+    seq:
+      - id: x
+        type: b4
+      - id: z
+        type: b4
+      - id: y
+        type: u1
+      - id: block_id
+        type: var_int
 
 ### Advancements
 
