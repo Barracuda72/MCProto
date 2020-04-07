@@ -1432,7 +1432,7 @@ types:
         if: action == player_list_action::add.to_i or action == player_list_action::update_gamemode.to_i
       - id: ping
         type: var_int
-        if: action == player_list_action::add.to_i or action == player_list_action::update_ping.to_i
+        if: action == player_list_action::add.to_i or action == player_list_action::update_latency.to_i
       - id: display_name
         type: player_display_name
         if: action == player_list_action::add.to_i or action == player_list_action::update_display_name.to_i
@@ -1865,7 +1865,7 @@ enums:
   player_list_action:
     0: add
     1: update_gamemode
-    2: update_latncy
+    2: update_latency
     3: update_display_name
     4: remove_player
   particle_id:
