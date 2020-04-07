@@ -339,6 +339,7 @@ types:
             0x2A: cb_entity_position_and_rotation
             0x2B: cb_entity_rotation
             0x32: cb_player_abilities
+            0x33: cb_combat_event
             0x34: cb_player_info
             0x36: cb_player_position_and_look
             0x37: cb_unlock_recipies
@@ -636,6 +637,18 @@ types:
         type: f4
       - id: fov_modifier
         type: f4
+        
+  cb_combat_event: # 0x33
+    seq:
+      - id: event
+        type: var_int
+        # enum: combat_event_type
+      - id: combat_end
+        type: combat_end
+        if: event.value == combat_event_type::combat_end.to_i
+      - id: entity_dead
+        type: entity_dead
+        if: event.value == combat_event_type::entity_dead.to_i
         
   cb_player_info: # 0x34
     seq:
@@ -1628,6 +1641,22 @@ types:
       - id: cape_enabled
         type: b1
 
+  combat_end:
+    seq:
+      - id: duration 
+        type: var_int
+      - id: entity_id 
+        type: s4
+      
+  entity_dead:
+    seq:
+      - id: player_id 
+        type: var_int
+      - id: entity_id 
+        type: int
+      - id: message 
+        type: string
+
 ### Advancements
 
   advancement_mapping:
@@ -1864,3 +1893,7 @@ enums:
     3: swing_offhand
     4: critical_effect
     5: magic_critical_effect
+  combat_event_type:
+    0: combat_enter
+    1: combat_end
+    2: entity_dead
