@@ -344,6 +344,7 @@ types:
             0x29: cb_entity_position
             0x2A: cb_entity_position_and_rotation
             0x2B: cb_entity_rotation
+            0x2F: cb_open_window
             0x32: cb_player_abilities
             0x33: cb_combat_event
             0x34: cb_player_info
@@ -689,6 +690,15 @@ types:
         type: angle
       - id: is_on_ground
         type: bool
+        
+  cb_open_window: # 0x2F
+    seq:
+      - id: window_id 
+        type: var_int
+      - id: window_type 
+        type: var_int
+      - id: window_title 
+        type: string
         
   cb_player_abilities: # 0x32
     seq:
