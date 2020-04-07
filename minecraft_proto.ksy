@@ -388,6 +388,7 @@ types:
             0x17: sb_pick_item
             0x1A: sb_player_digging
             0x2A: sb_animation
+            0x2C: sb_player_block_placement
             _: uncompressed_data
 
   cb_spawn_entity: # 0x00
@@ -1068,6 +1069,21 @@ types:
       - id: hand
         type: var_int
         #enum: hand
+        
+  sb_player_block_placement: # 0x2C
+    seq:
+      - id: hand
+        type: var_int
+        #enum: hand
+      - id: location
+        type: position
+      - id: face
+        type: var_int
+        #enum: block_face
+      - id: cursor_position
+        type: vec3f_xyz
+      - id: is_inside_block
+        type: bool
 
 ####################################
 
@@ -1124,6 +1140,15 @@ types:
         type: s4
       - id: z
         type: s4
+        
+  vec3f_xyz:
+    seq:
+      - id: x
+        type: f4
+      - id: y
+        type: f4
+      - id: z
+        type: f4
         
   vec3d_xyz:
     seq:
