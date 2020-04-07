@@ -331,6 +331,7 @@ types:
             0x0F: cb_chat_message
             0x10: cb_multi_block_change
             0x12: cb_declare_commands
+            0x13: cb_window_confirmation
             0x15: cb_window_items
             0x17: cb_set_slot
             0x19: csb_plugin_message
@@ -522,6 +523,15 @@ types:
         repeat-expr: count.value
       - id: root_index
         type: var_int
+        
+  cb_window_confirmation: # 0x13
+    seq:
+      - id: window_id
+        type: u1
+      - id: action_number
+        type: s2
+      - id: accepted 
+        type: bool
         
   cb_window_items: # 0x15
     seq:
