@@ -697,6 +697,7 @@ types:
         type: var_int
       - id: window_type 
         type: var_int
+        #enum: window_type
       - id: window_title 
         type: string
         
@@ -2084,3 +2085,27 @@ enums:
     0: chat
     1: system
     2: game_info
+  window_type:
+    0:  generic_9x1
+    1:  generic_9x2
+    2:  generic_9x3
+    3:  generic_9x4
+    4:  generic_9x5
+    5:  generic_9x6
+    6:  generic_3x3
+    7:  anvil
+    8:  beacon
+    9:  blast_furnace
+    10: brewing_stand
+    11: crafting
+    12: enchantment
+    13: furnace
+    14: grindstone
+    15: hopper
+    16: lectern
+    17: loom
+    18: merchant
+    19: shulker_box
+    20: smoker
+    21: cartography
+    22: stonecutter
