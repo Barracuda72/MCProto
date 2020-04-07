@@ -18,6 +18,7 @@ class TcpProxy(object):
         self.buffer_size = 2048
 
         self.connections_map = {}
+        self.handlers = {}
         self.serverbound = defaultdict(lambda: False)
 
     def run(self):
@@ -50,6 +51,10 @@ class TcpProxy(object):
                             self.connections_map[client] = rserver
                             self.connections_map[rserver] = client
                             self.serverbound[client] = True
+                            if (self.handler):
+                                handler = self.handler()
+                                self.handlers[client] = handler
+                                self.handlers[rserver] = handler
                         else:
                             print ("Can't establish connection to server, closing connection")
                             client.close()
@@ -59,7 +64,8 @@ class TcpProxy(object):
                         if (len(data) > 0):
                             # Process data
                             if (self.handler):
-                                self.handler(self.serverbound[s], data) # TODO
+                                handler = self.handlers[s]
+                                handler.handle_packet(self.serverbound[s], data) # TODO
                             # Send data
                             self.send(s, data)
                         else:
@@ -118,3 +124,6 @@ class TcpProxy(object):
         self.connections_map[pair_sock].close()
         del self.connections_map[sock]
         del self.connections_map[pair_sock]
+        if (self.handler):
+            del self.handlers[sock]
+            del self.handlers[pair_sock]
