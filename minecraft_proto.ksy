@@ -375,6 +375,7 @@ types:
             0x13: sb_player_rotation
             0x14: sb_player_movement
             0x17: sb_pick_item
+            0x1A: sb_player_digging
             0x2A: sb_animation
             _: uncompressed_data
 
@@ -923,6 +924,17 @@ types:
     seq:
       - id: slot
         type: var_int
+        
+  sb_player_digging:
+    seq:
+      - id: status
+        type: var_int 
+        # enum: player_digging_status
+      - id: location
+        type: position
+      - id: face
+        type: u1
+        enum: block_face
         
   sb_animation: # 0x2A
     seq:
@@ -1780,3 +1792,18 @@ enums:
   hand:
     0: main_hand
     1: off_hand
+  player_digging_status:
+    0: started_digging
+    1: cancelled_digging
+    2: finished_digging
+    3: drop_item_stack
+    4: drop_item
+    5: use_item # Shoot arrow, finish eating
+    6: swap_item_in_hand
+  block_face:
+    0: bottom
+    1: top
+    2: north
+    3: south
+    4: west
+    5: east
