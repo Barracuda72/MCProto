@@ -3,11 +3,14 @@
 from inspect import ismethod, isfunction, isclass
 from kaitaistruct import KaitaiStream, BytesIO
 
+import string
+import random
+
 from generated.var_int import VarInt
 from generated.minecraft_proto import MinecraftProto
 
 class MinecraftParser(object):
-    dump_filename = "dump.mcproto"
+    dump_filename = "dump_{}.mcproto"
 
     compression_active = False
     game_state = MinecraftProto.GameState.handshake
@@ -15,10 +18,14 @@ class MinecraftParser(object):
     def __init__(self):
         self.compression_active = False
         self.game_state = MinecraftProto.GameState.handshake
-        self.file = open(self.dump_filename, "wb")
+        self.file = open(self.dump_filename.format(self.rand_id()), "wb")
 
     def __del__(self):
         self.file.close()
+
+    def rand_id(self):
+        N = 8
+        return ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
 
     def get_payload(self, packet):
         payload = None
@@ -130,11 +137,15 @@ class MinecraftParser(object):
             if not known:
                 self.hexdump(serverbound, part)
 
+            self.file_dump(serverbound, part)
+
             offset += size
 
-    def hexdump(self, serverbound, data, length=16):
+    def file_dump(self, serverbound, data):
         self.file.write(bytes([serverbound]))
         self.file.write(data)
+
+    def hexdump(self, serverbound, data, length=16):
         filter = ''.join([(len(repr(chr(x))) == 3) and chr(x) or '.' for x in range(256)])
         lines = []
         digits = 4 if isinstance(data, str) else 2
