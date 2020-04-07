@@ -353,6 +353,7 @@ types:
             0x4F: cb_time_update
             0x52: cb_sound_effect
             0x56: cb_collect_item
+            0x57: cb_entity_teleport
             0x58: cb_advancements
             0x59: cb_entity_properties
             0x5B: cb_declare_recipies
@@ -374,6 +375,7 @@ types:
             0x13: sb_player_rotation
             0x14: sb_player_movement
             0x17: sb_pick_item
+            0x2A: sb_animation
             _: uncompressed_data
 
   cb_spawn_living_entity: # 0x03
@@ -787,6 +789,19 @@ types:
         type: var_int
       - id: pickup_item_count
         type: var_int
+        
+  cb_entity_teleport: # 0x57
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: position
+        type: vec3d_xyz
+      - id: yaw
+        type: angle
+      - id: pitch
+        type: angle
+      - id: is_on_ground
+        type: bool
       
   cb_advancements: # 0x58
     seq:
@@ -908,6 +923,12 @@ types:
     seq:
       - id: slot
         type: var_int
+        
+  sb_animation: # 0x2A
+    seq:
+      - id: hand
+        type: var_int
+        #enum: hand
 
 ####################################
 
@@ -1756,3 +1777,6 @@ enums:
     0: task
     1: challenge
     2: goal
+  hand:
+    0: main_hand
+    1: off_hand
