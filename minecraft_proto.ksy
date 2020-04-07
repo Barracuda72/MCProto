@@ -321,6 +321,7 @@ types:
           switch-on: _parent.packet_id.value
           cases:
             0x03: cb_spawn_living_entity
+            0x08: cb_acknowledge_digging
             0x0B: cb_block_action
             0x0E: cb_server_difficulty
             0x12: cb_declare_commands
@@ -405,6 +406,18 @@ types:
         type: s2
       - id: velocity_z 
         type: s2
+        
+  cb_acknowledge_digging: # 0x08
+    seq:
+      - id: location 
+        type: position
+      - id: block 
+        type: var_int
+      - id: status 
+        type: var_int 
+        #enum: player_digging_status
+      - id: successful 
+        type: bool
 
   cb_block_action: # 0x0B
     seq:
@@ -925,7 +938,7 @@ types:
       - id: slot
         type: var_int
         
-  sb_player_digging:
+  sb_player_digging: # 0x1A
     seq:
       - id: status
         type: var_int 
