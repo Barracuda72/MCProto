@@ -333,6 +333,7 @@ types:
             0x1C: cb_entity_status
             0x21: csb_keepalive
             0x22: cb_chunk_data
+            0x23: cb_effect
             0x25: cb_update_light
             0x26: cb_play_join_game
             0x29: cb_entity_position
@@ -538,6 +539,18 @@ types:
         type: nbt
         repeat: expr
         repeat-expr: number_of_block_entities.value
+
+  cb_effect: # 0x23
+    seq:
+      - id: effect_id 
+        type: s4
+        enum: effect_id
+      - id: location 
+        type: position
+      - id: data 
+        type: s4
+      - id: disable_relative_volume 
+        type: bool
 
   cb_update_light: # 0x25
     seq:
@@ -1897,3 +1910,64 @@ enums:
     0: combat_enter
     1: combat_end
     2: entity_dead
+  effect_id:
+    # Sounds
+    1000: dispenser_dispensed 	
+    1001: dispenser_failed
+    1002: dispenser_shot
+    1003: ender_eye_launched 	
+    1004: firework_shot 	
+    1005: iron_door_opened 	
+    1006: wooden_door_opened 	
+    1007: wooden_trapdoor_opened 	
+    1008: fence_gate_opened 	
+    1009: fire_extinguished 	
+    1010: record_played # Special case
+    1011: iron_door_closed
+    1012: wooden_door_closed 	
+    1013: wooden_trapdoor_closed 	
+    1014: fence_gate_closed 	
+    1015: ghast_warned 	
+    1016: ghast_shot 	
+    1017: enderdragon_shot
+    1018: blaze_shot
+    1019: zombie_attacked_wood_door 	
+    1020: zombie_attacked_iron_door 	
+    1021: zombie_broke_wood_door 	
+    1022: wither_broke_block 	
+    1023: wither_spawned 	
+    1024: wither_shot 	
+    1025: bat_takes_off 	
+    1026: zombie_infected
+    1027: zombie_villager_converted 	
+    1028: ender_dragon_dead
+    1029: anvil_destroyed	
+    1030: anvil_used 	
+    1031: anvil_landed 	
+    1032: portal_travelled
+    1033: chorus_flower_grown 	
+    1034: chorus_flower_died 	
+    1035: brewing_stand_brewed 	
+    1036: iron_trapdoor_opened 	
+    1037: iron_trapdoor_closed
+    # Particles
+    2000: spawn_ten_smoke_particles # e.g. from a fire; direction, see below
+    2001: block_break_with_sound # Block state, as an index into the global palette
+    2002: splash_potion # Particle effect + glass break sound. Potion ID
+    2003: eye_of_ender # entity break animation — particles and sound 	
+    2004: mob_spawn_particle # effect: smoke + flames 	
+    2005: bonemeal_particles # how many particles to spawn (if set to 0, 15 are spawned)
+    2006: dragon_breath
+    2007: instant_splash_potion # Potion ID
+    3000: end_gateway_spawn
+    3001: enderdragon_growl
+  smoke_direction:
+    0: southeast
+    1: south
+    2: southwest
+    3: east
+    4: up # or middle ?
+    5: west
+    6: northeast
+    7: north
+    8: northwest
