@@ -331,7 +331,7 @@ types:
             0x0F: cb_chat_message
             0x10: cb_multi_block_change
             0x12: cb_declare_commands
-            0x13: cb_window_confirmation
+            0x13: csb_window_confirmation
             0x15: cb_window_items
             0x17: cb_set_slot
             0x19: csb_plugin_message
@@ -380,6 +380,7 @@ types:
             0x00: sb_teleport_confirm
             0x04: sb_client_status
             0x05: sb_client_settings
+            0x07: csb_window_confirmation
             0x0B: csb_plugin_message
             0x0E: sb_interact_entity
             0x0F: csb_keepalive
@@ -524,7 +525,7 @@ types:
       - id: root_index
         type: var_int
         
-  cb_window_confirmation: # 0x13
+  csb_window_confirmation: # 0x13 (cb), 0x07 (sb)
     seq:
       - id: window_id
         type: u1
