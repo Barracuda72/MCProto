@@ -321,6 +321,7 @@ types:
           switch-on: _parent.packet_id.value
           cases:
             0x03: cb_spawn_living_entity
+            0x06: cb_entity_animation
             0x08: cb_acknowledge_digging
             0x0B: cb_block_action
             0x0C: cb_block_change
@@ -408,6 +409,14 @@ types:
         type: s2
       - id: velocity_z 
         type: s2
+        
+  cb_entity_animation: # 0x06
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: animation_id
+        type: u1
+        enum: entity_animation_id
         
   cb_acknowledge_digging: # 0x08
     seq:
@@ -1848,3 +1857,10 @@ enums:
     0: interact
     1: attack
     2: interact_at
+  entity_animation_id:
+    0: swing_main_arm
+    1: take_damage
+    2: leave_bed
+    3: swing_offhand
+    4: critical_effect
+    5: magic_critical_effect
