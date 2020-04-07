@@ -323,6 +323,7 @@ types:
             0x03: cb_spawn_living_entity
             0x08: cb_acknowledge_digging
             0x0B: cb_block_action
+            0x0C: cb_block_change
             0x0E: cb_server_difficulty
             0x12: cb_declare_commands
             0x15: cb_window_items
@@ -429,6 +430,13 @@ types:
       - id: action_param
         type: u1
       - id: block_type
+        type: var_int
+        
+  cb_block_change: # 0x0C
+    seq:
+      - id: location
+        type: position
+      - id: block_id
         type: var_int
 
   cb_server_difficulty: # 0x0E
