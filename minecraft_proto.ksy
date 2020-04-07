@@ -381,6 +381,7 @@ types:
             0x04: sb_client_status
             0x05: sb_client_settings
             0x07: csb_window_confirmation
+            0x0A: sb_close_window
             0x0B: csb_plugin_message
             0x0E: sb_interact_entity
             0x0F: csb_keepalive
@@ -1022,6 +1023,11 @@ types:
       - id: main_hand 
         type: var_int 
         #enum: main_hand
+        
+  sb_close_window: # 0x0A
+    seq:
+      - id: window_id
+        type: u1
         
   sb_interact_entity: #0x0E
     seq:
