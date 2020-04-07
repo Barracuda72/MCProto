@@ -1,10 +1,10 @@
 #!/usr/bin/env false
 
 from inspect import ismethod, isfunction, isclass
+from kaitaistruct import KaitaiStream, BytesIO
 
 from generated.var_int import VarInt
 from generated.minecraft_proto import MinecraftProto
-from kaitaistruct import KaitaiStream, BytesIO
 
 class MinecraftParser(object):
     dump_filename = "dump.mcproto"
