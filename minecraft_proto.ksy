@@ -391,6 +391,7 @@ types:
             0x14: sb_player_movement
             0x17: sb_pick_item
             0x1A: sb_player_digging
+            0x23: sb_held_item_change
             0x2A: sb_animation
             0x2C: sb_player_block_placement
             _: uncompressed_data
@@ -1091,6 +1092,11 @@ types:
       - id: face
         type: u1
         enum: block_face
+        
+  sb_held_item_change: # 0x23
+    seq:
+      - id: slot
+        type: s2
         
   sb_animation: # 0x2A
     seq:
