@@ -320,6 +320,8 @@ types:
         type:
           switch-on: _parent.packet_id.value
           cases:
+            0x00: cb_spawn_entity
+            0x01: cb_spawn_experience_orb
             0x03: cb_spawn_living_entity
             0x06: cb_entity_animation
             0x08: cb_acknowledge_digging
@@ -385,6 +387,34 @@ types:
             0x1A: sb_player_digging
             0x2A: sb_animation
             _: uncompressed_data
+
+  cb_spawn_entity: # 0x00
+    seq:
+      - id: entity_id 
+        type: var_int
+      - id: uuid 
+        type: uuid
+      - id: type 
+        type: var_int
+      - id: position 
+        type: vec3d_xyz
+      - id: pitch 
+        type: angle
+      - id: yaw 
+        type: angle
+      - id: data 
+        type: s4
+      - id: velocity 
+        type: vec3s_xyz
+
+  cb_spawn_experience_orb: # 0x01
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: position
+        type: vec3d_xyz
+      - id: count
+        type: s2
 
   cb_spawn_living_entity: # 0x03
     seq:
