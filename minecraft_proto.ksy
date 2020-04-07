@@ -334,6 +334,7 @@ types:
             0x17: cb_set_slot
             0x19: csb_plugin_message
             0x1C: cb_entity_status
+            0x1E: cb_unload_chunk
             0x21: csb_keepalive
             0x22: cb_chunk_data
             0x23: cb_effect
@@ -544,6 +545,11 @@ types:
       - id: entity_status
         type: u1
 
+  cb_unload_chunk: # 0x1E
+    seq:
+      - id: coords
+        type: vec2i_xz
+
   csb_keepalive: # 0x21 (cb), 0x0F (sb)
     seq:
       - id: keep_alive_id
@@ -551,10 +557,8 @@ types:
 
   cb_chunk_data: # 0x22
     seq:
-      - id: chunk_x
-        type: s4
-      - id: chunk_z
-        type: s4
+      - id: coords
+        type: vec2i_xz
       - id: is_full_chunk
         type: bool
       - id: primary_bit_mask
@@ -1101,6 +1105,13 @@ types:
         type: f8
       - id: z
         type: f8
+        
+  vec2i_xz:
+    seq:
+      - id: x
+        type: s4
+      - id: z
+        type: s4
         
   vec3d_xyz:
     seq:
