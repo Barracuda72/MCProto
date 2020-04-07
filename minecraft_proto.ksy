@@ -370,6 +370,7 @@ types:
             0x04: sb_client_status
             0x05: sb_client_settings
             0x0B: csb_plugin_message
+            0x0E: sb_interact_entity
             0x0F: csb_keepalive
             0x11: sb_player_position
             0x12: sb_player_position_and_rotation
@@ -900,6 +901,21 @@ types:
       - id: main_hand 
         type: var_int 
         #enum: main_hand
+        
+  sb_interact_entity: #0x0E
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: type
+        type: var_int
+        #enum: interact_entity_type
+      - id: target_xyz
+        type: vec3d_xyz
+        if: type.value == interact_entity_type::interact_at.to_i
+      - id: hand
+        type: var_int
+        if: type.value == interact_entity_type::interact_at.to_i
+        #enum: hand
         
   sb_player_position: # 0x11
     seq:
@@ -1820,3 +1836,7 @@ enums:
     3: south
     4: west
     5: east
+  interact_entity_type:
+    0: interact
+    1: attack
+    2: interact_at
