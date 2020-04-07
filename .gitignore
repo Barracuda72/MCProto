@@ -131,3 +131,6 @@ dmypy.json
 # Vim files
 .*.swp
 .*.swo
+
+# Minecraft protocol dump
+*.mcproto
