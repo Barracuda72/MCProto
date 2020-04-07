@@ -1417,6 +1417,7 @@ types:
         type: uuid
       - id: name
         type: string # 16 chars max
+        if: action == player_list_action::add.to_i
       - id: number_of_properties
         type: var_int
         if: action == player_list_action::add.to_i
