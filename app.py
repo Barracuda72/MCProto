@@ -7,7 +7,7 @@ from MinecraftParser import MinecraftParser
 
 class Application(object):
     server_host = "127.0.0.1"
-    server_port = 2020
+    server_port = 25565
 
     proxy_host = "127.0.0.1"
     proxy_port = 2021
