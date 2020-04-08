@@ -391,6 +391,7 @@ types:
             0x14: sb_player_movement
             0x17: sb_pick_item
             0x1A: sb_player_digging
+            0x1B: sb_entity_action
             0x23: sb_held_item_change
             0x2A: sb_animation
             0x2C: sb_player_block_placement
@@ -1092,6 +1093,16 @@ types:
       - id: face
         type: u1
         enum: block_face
+        
+  sb_entity_action: # 0x1B
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: action_id
+        type: var_int 
+        #enum: entity_action
+      - id: jump_boost
+        type: var_int
         
   sb_held_item_change: # 0x23
     seq:
@@ -2132,3 +2143,13 @@ enums:
     20: smoker
     21: cartography
     22: stonecutter
+  entity_action:
+    0: start_sneaking
+    1: stop_sneaking
+    2: leave_bed
+    3: start_sprinting
+    4: stop_sprinting
+    5: start_horse_jump
+    6: stop_horse_jump
+    7: open_horse_inventory
+    8: start_elytra_flying
