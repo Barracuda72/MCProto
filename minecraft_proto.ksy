@@ -370,6 +370,7 @@ types:
             0x57: cb_entity_teleport
             0x58: cb_advancements
             0x59: cb_entity_properties
+            0x5A: cb_entity_effect
             0x5B: cb_declare_recipies
             0x5C: cb_tags
             _: uncompressed_data
@@ -1004,6 +1005,19 @@ types:
         repeat: expr
         repeat-expr: number_of_properties
         
+  cb_entity_effect: # 0x5A
+    seq:
+      - id: entity_id 
+        type: var_int
+      - id: effect_id 
+        type: u1
+      - id: amplifier 
+        type: u1
+      - id: duration 
+        type: var_int
+      - id: flags 
+        type: entity_effect_flags
+    
   cb_declare_recipies: # 0x5B
     seq:
       - id: num_recipies
@@ -1856,6 +1870,17 @@ types:
         type: u1
       - id: block_id
         type: var_int
+
+  entity_effect_flags:
+    seq:
+      - id: reserved
+        type: b5
+      - id: show_icon 
+        type: b1
+      - id: show_particles 
+        type: b1
+      - id: is_ambient 
+        type: b1
 
 ### Advancements
 
