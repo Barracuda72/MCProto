@@ -340,6 +340,7 @@ types:
             0x21: csb_keepalive
             0x22: cb_chunk_data
             0x23: cb_effect
+            0x24: cb_particle
             0x25: cb_update_light
             0x26: cb_play_join_game
             0x29: cb_entity_position
@@ -622,6 +623,23 @@ types:
         type: s4
       - id: disable_relative_volume 
         type: bool
+        
+  cb_particle: # 0x24
+    seq:
+      - id: id
+        type: s4
+      - id: is_long_distance
+        type: bool
+      - id: position
+        type: vec3d_xyz
+      - id: offset
+        type: vec3f_xyz
+      - id: particle_data
+        type: f4
+      - id: particle_count
+        type: s4
+      - id: data
+        type: particle_data(id)
 
   cb_update_light: # 0x25
     seq:
@@ -1684,15 +1702,24 @@ types:
       - id: id
         type: var_int
         # enum: particle_id
+      - id: data
+        type: particle_data(id.value)
+        
+  particle_data:
+    params:
+      - id: id
+        type: s4
+        #enum: particle_id
+    seq:
       - id: block_state
         type: var_int
-        if: id.value == particle_id::block.to_i or id.value == particle_id::falling_dust.to_i
+        if: id == particle_id::block.to_i or id == particle_id::falling_dust.to_i
       - id: color
         type: color
-        if: id.value == particle_id::dust.to_i
+        if: id == particle_id::dust.to_i
       - id: item
         type: slot
-        if: id.value == particle_id::item.to_i
+        if: id == particle_id::item.to_i
         
   color:
     seq:
