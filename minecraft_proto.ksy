@@ -355,6 +355,7 @@ types:
             0x36: cb_player_position_and_look
             0x37: cb_unlock_recipies
             0x38: cb_destroy_entities
+            0x39: cb_remove_entity_effect
             0x3C: cb_entity_head_look
             0x3E: cb_world_border
             0x40: cb_held_item_change
@@ -848,6 +849,14 @@ types:
         type: var_int
         repeat: expr
         repeat-expr: count.value
+        
+  cb_remove_entity_effect: # 0x39
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: effect_id
+        type: u1
+        enum: status_effect
     
   cb_entity_head_look: # 0x3C
     seq:
@@ -2247,3 +2256,37 @@ enums:
     11: enable_respawn_screen # 0: Enable respawn screen, 1: Immediately respawn (sent when the doImmediateRespawn gamerule changes) 
   weather_entity:
     1: thunderbolt
+  status_effect:
+    1:  speed
+    2:  slowness
+    3:  haste
+    4:  mining_fatigue
+    5:  strength
+    6:  instant_health
+    7:  instant_damage
+    8:  jump_boost
+    9:  nausea
+    10: regeneration
+    11: resistance
+    12: fire_resistance
+    13: water_breathing
+    14: invisibility
+    15: blindness
+    16: night_vision
+    17: hunger
+    18: weakness
+    19: poison
+    20: wither
+    21: health_boost
+    22: absorption
+    23: saturation
+    24: glowing
+    25: levitation
+    26: luck
+    27: unluck
+    28: slow_falling
+    29: conduit_power
+    30: dolphins_grace
+    31: bad_omen
+    32: hero_of_the_village
+
