@@ -337,6 +337,7 @@ types:
             0x17: cb_set_slot
             0x19: csb_plugin_message
             0x1C: cb_entity_status
+            0x1D: cb_explosion
             0x1E: cb_unload_chunk
             0x1F: cb_change_game_state
             0x21: csb_keepalive
@@ -588,6 +589,21 @@ types:
         type: s4
       - id: entity_status
         type: u1
+
+  cb_explosion: # 0x1D
+    seq:
+      - id: coords
+        type: vec3f_xyz
+      - id: strength
+        type: f4
+      - id: record_count
+        type: s4
+      - id: affected_blocks_offsets
+        type: vec3b_xyz
+        repeat: expr
+        repeat-expr: record_count
+      - id: player_motion
+        type: vec3f_xyz
 
   cb_unload_chunk: # 0x1E
     seq:
@@ -1271,6 +1287,15 @@ types:
         type: f8
       - id: z
         type: f8
+        
+  vec3b_xyz:
+    seq:
+      - id: x
+        type: s1
+      - id: y
+        type: s1
+      - id: z
+        type: s1
         
   vec3s_xyz:
     seq:
