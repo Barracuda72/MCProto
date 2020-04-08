@@ -55,18 +55,26 @@ class MinecraftParser(object):
             print ('')
             return True
 
-    def dump(self, obj, level = 0):
+    def print_obj(self, name, value, level):
         padding = 4 * level * ' '
+        if (ismethod(value) or isfunction(value) or isclass(value)):
+            pass
+        elif isinstance(value, (int, float, str, dict, set)):
+            print ("{} | {} = {}".format(padding, name, value))
+        elif isinstance(value, list):
+            print ("{} | {} [".format(padding, name))
+            for i, e in enumerate(value):
+                self.print_obj(i, e, level + 1)
+            print ("{} ]".format(padding))
+        else:
+            print ("{} | {} ({}):".format(padding, name, type(value).__name__))
+            self.dump(value, level + 1)
+    
+    def dump(self, obj, level = 0):
         for a in dir(obj):
             if (not a.startswith('_')):
                 val = getattr(obj, a)
-                if (ismethod(val) or isfunction(val) or isclass(val)):
-                    pass
-                elif isinstance(val, (int, float, str, list, dict, set)):
-                    print ("{} | {} = {}".format(padding, a, val))
-                else:
-                    print ("{} {} ({}):".format(padding, a, type(val).__name__))
-                    self.dump(val, level + 1)
+                self.print_obj(a, val, level)
 
     def decode_varint(self, data):
         result = 0
