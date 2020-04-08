@@ -322,6 +322,7 @@ types:
           cases:
             0x00: cb_spawn_entity
             0x01: cb_spawn_experience_orb
+            0x02: cb_spawn_weather_entity
             0x03: cb_spawn_living_entity
             0x06: cb_entity_animation
             0x08: cb_acknowledge_digging
@@ -428,6 +429,16 @@ types:
         type: vec3d_xyz
       - id: count
         type: s2
+        
+  cb_spawn_weather_entity: # 0x02
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: type
+        type: u1
+        enum: weather_entity
+      - id: position
+        type: vec3d_xyz
 
   cb_spawn_living_entity: # 0x03
     seq:
@@ -2234,3 +2245,5 @@ enums:
     9:  pufferfish_sting_sound
     10: elder_guardian_appearance # effect and sound
     11: enable_respawn_screen # 0: Enable respawn screen, 1: Immediately respawn (sent when the doImmediateRespawn gamerule changes) 
+  weather_entity:
+    1: thunderbolt
