@@ -396,6 +396,7 @@ types:
             0x23: sb_held_item_change
             0x2A: sb_animation
             0x2C: sb_player_block_placement
+            0x2D: sb_use_item
             _: uncompressed_data
 
   cb_spawn_entity: # 0x00
@@ -1147,6 +1148,12 @@ types:
         type: vec3f_xyz
       - id: is_inside_block
         type: bool
+  
+  sb_use_item: # 0x2D
+    seq:
+      - id: hand
+        type: var_int
+        #enum: hand
 
 ####################################
 
