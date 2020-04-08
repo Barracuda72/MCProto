@@ -337,6 +337,7 @@ types:
             0x19: csb_plugin_message
             0x1C: cb_entity_status
             0x1E: cb_unload_chunk
+            0x1F: cb_change_game_state
             0x21: csb_keepalive
             0x22: cb_chunk_data
             0x23: cb_effect
@@ -579,6 +580,14 @@ types:
     seq:
       - id: coords
         type: vec2i_xz
+        
+  cb_change_game_state: # 0x1F
+    seq:
+      - id: reason
+        type: u1
+        enum: state_change_reason
+      - id: value
+        type: f4
 
   csb_keepalive: # 0x21 (cb), 0x0F (sb)
     seq:
@@ -2187,3 +2196,16 @@ enums:
     6: stop_horse_jump
     7: open_horse_inventory
     8: start_elytra_flying
+  state_change_reason:
+    0:  invalid_bed # Would be used to switch between messages, but the only used message is 0 for invalid bed
+    1:  end_raining 	
+    2:  begin_raining 	
+    3:  change_gamemode # 	0: Survival, 1: Creative, 2: Adventure, 3: Spectator
+    4:  exit_end # 0: Immediately send Client Status of respawn without showing end credits; 1: Show end credits and respawn at the end (or when esc is pressed). 1 is sent if the player has not yet received the "The end?" advancement, while if they do have it 0 is used.
+    5:  demo_message # 0: Show welcome to demo screen, 101: Tell movement controls, 102: Tell jump control, 103: Tell inventory control, 104: Tell that the demo is over and print a message about how to take a screenshot
+    6:  arrow_hitting_player # Appears to be played when an arrow strikes another player in Multiplayer
+    7:  fade_value # The current darkness value. 1 = Dark, 0 = Bright, Setting the value higher causes the game to change color and freeze
+    8:  fade_time # Time in ticks for the sky to fade
+    9:  pufferfish_sting_sound
+    10: elder_guardian_appearance # effect and sound
+    11: enable_respawn_screen # 0: Enable respawn screen, 1: Immediately respawn (sent when the doImmediateRespawn gamerule changes) 
