@@ -421,9 +421,9 @@ types:
           switch-on: _parent.packet_id.value
           cases:
             0x00: sb_teleport_confirm
-            #0x01
-            #0x02
-            #0x03
+            0x01: sb_query_block_nbt
+            0x02: sb_set_difficulty
+            0x03: sb_chat_message
             0x04: sb_client_status
             0x05: sb_client_settings
             #0x06
@@ -1157,6 +1157,24 @@ types:
     seq:
       - id: teleport_id
         type: var_int
+        
+  sb_query_block_nbt: # 0x01
+    seq:
+      - id: transaction_id 
+        type: var_int
+      - id: location
+        type: position
+  
+  sb_set_difficulty: # 0x02
+    seq:
+      - id: new_difficulty
+        type: u1
+        enum: server_difficulty
+        
+  sb_chat_message: # 0x03
+    seq:
+      - id: data
+        type: string # no more than 256 bytes
         
   sb_client_status: # 0x04
     seq:
