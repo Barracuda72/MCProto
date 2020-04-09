@@ -337,6 +337,7 @@ types:
             0x16: cb_window_property
             0x17: cb_set_slot
             0x19: csb_plugin_message
+            0x1B: cb_disconnect
             0x1C: cb_entity_status
             0x1D: cb_explosion
             0x1E: cb_unload_chunk
@@ -599,6 +600,11 @@ types:
         type: u1
         repeat: expr
         repeat-expr: _parent._parent._parent.length.value - channel.len.value - channel.len.len - 2 # TODO!
+
+  cb_disconnect: # 0x1B
+    seq:
+      - id: reason
+        type: string
 
   cb_entity_status: # 0x1C
     seq:
