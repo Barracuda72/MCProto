@@ -334,6 +334,7 @@ types:
             0x12: cb_declare_commands
             0x13: csb_window_confirmation
             0x15: cb_window_items
+            0x16: cb_window_property
             0x17: cb_set_slot
             0x19: csb_plugin_message
             0x1C: cb_entity_status
@@ -564,6 +565,20 @@ types:
         type: slot
         repeat: expr
         repeat-expr: count
+
+  cb_window_property: # 0x16
+    seq:
+      - id: window_id
+        type: u1
+      - id: property
+        type: s2
+        #enum: beacon_properties
+        #enum: brewing_stand_properties
+        #enum: enchantment_table_properties
+        #enum: furnace_properties
+        #enum: anvil_properties
+      - id: value
+        type: s2
 
   cb_set_slot: # 0x17
     seq:
@@ -1430,7 +1445,7 @@ types:
       - id: nbt
         type: nbt
         if: present.value != 0
-      
+
 ### Tags
       
   tag_array:
@@ -2314,4 +2329,63 @@ enums:
     30: dolphins_grace
     31: bad_omen
     32: hero_of_the_village
-
+  furnace_properties:
+    0: fuel_left
+    1: fuel_burn_time
+    2: progress_arrow
+    3: maximum_progress
+  enchantment_table_properties:
+    0: level_requirement_top
+    1: level_requirement_middle
+    2: level_requirement_bottom
+    3: enchantment_seed
+    4: enchantment_id_top
+    5: enchantment_id_middle
+    6: enchantment_id_bottom
+    7: enchantment_level_top
+    8: enchantment_level_middle
+    9: enchantment_level_bottom
+  beacon_properties:
+    0: power_level
+    1: first_potion_effect
+    2: second_potion_effect
+  anvil_properties:
+    0: repair_cost
+  brewing_stand_properties:
+    0: brew_time
+    1: fuel_time
+  enchantment_id:
+    0:	protection
+    1:	fire_protection
+    2:	feather_falling
+    3:	blast_protection
+    4:	projectile_protection
+    5:	respiration
+    6:	aqua_affinity
+    7:	thorns
+    8:	depth_strider
+    9:	frost_walker
+    10:	binding_curse
+    11:	sharpness
+    12:	smite
+    13:	bane_of_arthropods
+    14:	knockback
+    15:	fire_aspect
+    16:	looting
+    17:	sweeping
+    18:	efficiency
+    19:	silk_touch
+    20:	unbreaking
+    21:	fortune
+    22:	power
+    23:	punch
+    24:	flame
+    25:	infinity
+    26:	luck_of_the_sea
+    27:	lure
+    28:	loyalty
+    29:	impaling
+    30:	riptide
+    31:	channeling
+    32:	mending
+    33:	vanishing_curse 
