@@ -426,14 +426,14 @@ types:
             0x03: sb_chat_message
             0x04: sb_client_status
             0x05: sb_client_settings
-            #0x06
+            0x06: sb_tab_complete
             0x07: csb_window_confirmation
             #0x08
             0x09: sb_click_window
             0x0A: sb_close_window
             0x0B: csb_plugin_message
-            #0x0C
-            #0x0D
+            0x0C: sb_edit_book
+            0x0D: sb_query_entity_nbt
             0x0E: sb_interact_entity
             0x0F: csb_keepalive
             #0x10
@@ -1199,6 +1199,13 @@ types:
         type: var_int 
         #enum: main_hand
         
+  sb_tab_complete: # 0x06
+    seq:
+      - id: transaction_id
+        type: var_int
+      - id: text
+        type: string # no more than 32500 bytes
+        
   sb_click_window: # 0x09
     seq:
       - id: window_id
@@ -1219,6 +1226,23 @@ types:
     seq:
       - id: window_id
         type: u1
+        
+  sb_edit_book: # 0x0C
+    seq:
+      - id: new_book
+        type: slot
+      - id: is_signing
+        type: bool
+      - id: hand
+        type: var_int
+        #enum: hand
+  
+  sb_query_entity_nbt: # 0x0D
+    seq:
+      - id: transaction_id
+        type: var_int
+      - id: entity_id
+        type: var_int
         
   sb_interact_entity: #0x0E
     seq:
