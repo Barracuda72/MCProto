@@ -450,11 +450,11 @@ types:
             0x1B: sb_entity_action
             #0x1C
             0x1D: sb_recipe_book_data
-            #0x1E
-            #0x1F
-            #0x20
-            #0x21
-            #0x22
+            0x1E: sb_name_item
+            0x1F: sb_resource_pack_status
+            0x20: sb_advancement_tab
+            0x21: sb_select_trade
+            0x22: sb_beacon_effect
             0x23: sb_held_item_change
             #0x24
             #0x25
@@ -463,7 +463,7 @@ types:
             #0x28
             #0x29
             0x2A: sb_animation
-            #0x2B
+            0x2B: sb_spectate
             0x2C: sb_player_block_placement
             0x2D: sb_use_item
             _: uncompressed_data
@@ -1351,6 +1351,40 @@ types:
             recipe_book_data::recipe_book_state.to_i: recipe_book_state
             _: force_parser_error
         
+  sb_name_item: # 0x1E
+    seq:
+      - id: item_name
+        type: string # No more than 32767 bytes
+        
+  sb_resource_pack_status: # 0x1F
+    seq:
+      - id: result
+        type: var_int
+        #enum: resource_pack_status
+        
+  sb_advancement_tab: # 0x20
+    seq:
+      - id: action
+        type: var_int 
+        #enum: advancement_tab_action
+      - id: tab_id
+        type: string
+        if: action.value == advancement_tab_action::opened_tab.to_i
+        
+  sb_select_trade: # 0x21
+    seq:
+      - id: selected_slot
+        type: var_int
+        
+  sb_beacon_effect: # 0x22
+    seq:
+      - id: primary_effect
+        type: var_int
+        #enum: status_effect
+      - id: secondary_effect
+        type: var_int
+        #enum: status_effect
+        
   sb_held_item_change: # 0x23
     seq:
       - id: slot
@@ -1361,6 +1395,11 @@ types:
       - id: hand
         type: var_int
         #enum: hand
+        
+  sb_spectate: # 0x2B
+    seq:
+      - id: target
+        type: uuid
         
   sb_player_block_placement: # 0x2C
     seq:
@@ -2577,3 +2616,11 @@ enums:
     4: drop_and_click_outside
     5: drag
     6: double_click
+  resource_pack_status:
+    0: successfully_loaded
+    1: declined
+    2: download_failed
+    3: accepted
+  advancement_tab_action:
+    0: opened_tab
+    1: closed_screen
