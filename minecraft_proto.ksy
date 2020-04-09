@@ -388,6 +388,7 @@ types:
             0x04: sb_client_status
             0x05: sb_client_settings
             0x07: csb_window_confirmation
+            0x09: sb_click_window
             0x0A: sb_close_window
             0x0B: csb_plugin_message
             0x0E: sb_interact_entity
@@ -1113,6 +1114,22 @@ types:
       - id: main_hand 
         type: var_int 
         #enum: main_hand
+        
+  sb_click_window: # 0x09
+    seq:
+      - id: window_id
+        type: u1
+      - id: slot
+        type: s2
+      - id:  button
+        type: u1
+      - id: action_number
+        type: s2
+      - id: mode
+        type: var_int
+        #enum: click_mode
+      - id: item
+        type: slot
         
   sb_close_window: # 0x0A
     seq:
@@ -2423,3 +2440,11 @@ enums:
   recipe_book_data:
     0: displayed_recipe
     1: recipe_book_state
+  click_mode:
+    0: normal_click
+    1: shift_click
+    2: number_key
+    3: middle_click
+    4: drop_and_click_outside
+    5: drag
+    6: double_click
