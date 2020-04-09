@@ -436,13 +436,13 @@ types:
             0x0D: sb_query_entity_nbt
             0x0E: sb_interact_entity
             0x0F: csb_keepalive
-            #0x10
+            0x10: sb_lock_difficulty
             0x11: sb_player_position
             0x12: sb_player_position_and_rotation
             0x13: sb_player_rotation
             0x14: sb_player_movement
-            #0x15
-            #0x16
+            0x15: sb_vehicle_move
+            0x16: sb_steer_boat
             0x17: sb_pick_item
             #0x18
             #0x19
@@ -1259,6 +1259,11 @@ types:
         if: type.value == interact_entity_type::interact_at.to_i
         #enum: hand
         
+  sb_lock_difficulty: # 0x10
+    seq:
+      - id: locked
+        type: bool
+        
   sb_player_position: # 0x11
     seq:
       - id: position
@@ -1289,6 +1294,22 @@ types:
   sb_player_movement: # 0x14
     seq:
       - id: is_on_ground
+        type: bool
+        
+  sb_vehicle_move: # 0x15
+    seq:
+      - id: position
+        type: vec3d_xyz
+      - id: yaw
+        type: f4
+      - id: pitch
+        type: f4
+  
+  sb_steer_boat: # 0x16
+    seq:
+      - id: left_paddle_turning
+        type: bool
+      - id: right_paddle_turning
         type: bool
         
   sb_pick_item: # 0x17
