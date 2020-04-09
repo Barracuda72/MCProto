@@ -2,6 +2,7 @@
 
 from inspect import ismethod, isfunction, isclass
 from kaitaistruct import KaitaiStream, BytesIO
+from multiprocessing import Process, Queue
 
 import string
 import random
@@ -165,3 +166,24 @@ class MinecraftParser(object):
         print('Serverbound: {}'.format(serverbound))
         print(''.join(lines))
 
+class MinecraftParserWorker(Process):
+    def __init__(self, queue):
+        super (MinecraftParserWorker, self).__init__()
+        self.queue = queue
+        self.parser = MinecraftParser()
+
+    def run(self):
+        for data in iter(self.queue.get, None):
+            self.parser.handle_packet(*data)
+
+class MinecraftParserMulti(object):
+    def __init__(self):
+        self.queue = Queue()
+        self.worker = MinecraftParserWorker(self.queue)
+        self.worker.start()
+
+    def __del__(self):
+        self.queue.put(None)
+
+    def handle_packet(self, serverbound, data):
+        self.queue.put( (serverbound, data) )

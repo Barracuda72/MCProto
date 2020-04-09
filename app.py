@@ -3,7 +3,7 @@
 import sys
 
 from TcpProxy import TcpProxy
-from MinecraftParser import MinecraftParser
+from MinecraftParser import MinecraftParserMulti
 
 class Application(object):
     server_host = "127.0.0.1"
@@ -21,7 +21,7 @@ class Application(object):
             except Exception as e:
                 print ("Can't parse command line: {}".format(e))
 
-        self.proxy = TcpProxy(self.server_host, self.server_port, self.proxy_host, self.proxy_port, MinecraftParser)
+        self.proxy = TcpProxy(self.server_host, self.server_port, self.proxy_host, self.proxy_port, MinecraftParserMulti)
 
     def run(self):
         self.proxy.run()
