@@ -399,6 +399,7 @@ types:
             0x17: sb_pick_item
             0x1A: sb_player_digging
             0x1B: sb_entity_action
+            0x1D: sb_recipe_book_data
             0x23: sb_held_item_change
             0x2A: sb_animation
             0x2C: sb_player_block_placement
@@ -849,14 +850,8 @@ types:
       - id: action
         type: var_int
         # enum: recipes_action
-      - id: crafting_book_open
-        type: bool
-      - id: crafting_book_filtered
-        type: bool
-      - id: smelting_book_open
-        type: bool
-      - id: smelting_book_filtered
-        type: bool
+      - id: recipe_book_state
+        type: recipe_book_state
       - id: main_recipes_count
         type: var_int
       - id: main_recipes
@@ -1197,6 +1192,19 @@ types:
       - id: jump_boost
         type: var_int
         
+  sb_recipe_book_data: # 0x1D
+    seq:
+      - id: type
+        type: var_int
+        #enum: recipe_book_data
+      - id: data
+        type:
+          switch-on: type.value
+          cases:
+            recipe_book_data::displayed_recipe.to_i: displayed_recipe_data
+            recipe_book_data::recipe_book_state.to_i: recipe_book_state
+            _: force_parser_error
+        
   sb_held_item_change: # 0x23
     seq:
       - id: slot
@@ -1330,6 +1338,13 @@ types:
       - id: z
         type: s4
         
+  force_parser_error:
+    seq:
+      - id: dummy
+        type: u1
+        repeat: expr
+        repeat-expr: 0xBABECAFE
+        
 ### Crafting-related
         
   crafting_recipe:
@@ -1445,6 +1460,22 @@ types:
       - id: nbt
         type: nbt
         if: present.value != 0
+
+  displayed_recipe_data:
+    seq:
+      - id: recipe_id
+        type: string
+        
+  recipe_book_state:
+    seq:
+      - id: crafting_book_open
+        type: bool
+      - id: crafting_book_filtered
+        type: bool
+      - id: smelting_book_open
+        type: bool
+      - id: smelting_book_filtered
+        type: bool
 
 ### Tags
       
@@ -2388,4 +2419,7 @@ enums:
     30:	riptide
     31:	channeling
     32:	mending
-    33:	vanishing_curse 
+    33:	vanishing_curse
+  recipe_book_data:
+    0: displayed_recipe
+    1: recipe_book_state
