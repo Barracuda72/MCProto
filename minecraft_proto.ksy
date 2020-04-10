@@ -337,7 +337,7 @@ types:
             0x0E: cb_server_difficulty
             0x0F: cb_chat_message
             0x10: cb_multi_block_change
-            #0x11
+            0x11: cb_tab_complete
             0x12: cb_declare_commands
             0x13: csb_window_confirmation
             #0x14
@@ -630,6 +630,21 @@ types:
         type: block_change_record
         repeat: expr
         repeat-expr: record_count.value
+
+  cb_tab_complete: # 0x11
+    seq:
+      - id: id
+        type: var_int
+      - id: start
+        type: var_int
+      - id: length
+        type: var_int
+      - id: count
+        type: var_int
+      - id: matches
+        type: tab_complete_match
+        repeat: expr
+        repeat-expr: count.value
 
   cb_declare_commands: # 0x12
     seq:
@@ -1920,6 +1935,16 @@ types:
     seq:
       - id: decimals
         type: bool
+        
+  tab_complete_match:
+    seq:
+      - id: match 
+        type: string
+      - id: has_tooltip 
+        type: bool
+      - id: tooltip 
+        type: string 
+        if: has_tooltip.value != 0
       
 ### Player, Position, Look, etc
 
@@ -2257,6 +2282,15 @@ types:
       - id: is_ambient 
         type: b1
 
+  steer_vehicle_flags:
+    seq:
+      - id: reserved
+        type: b6
+      - id: unmount
+        type: b1
+      - id: jump
+        type: b1
+
 ### Advancements
 
   advancement_mapping:
@@ -2369,15 +2403,6 @@ types:
         type: s8
         if: achieved.value != 0
 
-  steer_vehicle_flags:
-    seq:
-      - id: reserved
-        type: b6
-      - id: unmount
-        type: b1
-      - id: jump
-        type: b1
-        
   statistic:
     seq:
       - id: category_id
