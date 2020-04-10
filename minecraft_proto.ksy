@@ -394,8 +394,8 @@ types:
             0x47: cb_entity_equipment
             0x48: cb_set_experience
             0x49: cb_update_health
-            #0x4A
-            #0x4B
+            0x4A: cb_scoreboard_objective
+            0x4B: cb_set_passengers
             #0x4C
             #0x4D
             0x4E: cb_spawn_position
@@ -1204,6 +1204,32 @@ types:
         type: var_int
       - id: saturation
         type: f4
+        
+  cb_scoreboard_objective: # 0x4A
+    seq:
+      - id: objective_name 
+        type: string
+      - id: mode 
+        type: u1
+        enum: scoreboard_objective_mode
+      - id: objective_value
+        type: string 
+        if: mode == scoreboard_objective_mode::create_scoreboard or mode == scoreboard_objective_mode::update_display_text
+      - id: type 
+        type: var_int 
+        #enum: scoreboard_objective_type
+        if: mode == scoreboard_objective_mode::create_scoreboard or mode == scoreboard_objective_mode::update_display_text
+        
+  cb_set_passengers: # 0x4B
+    seq:
+      - id: entity_id 
+        type: var_int
+      - id: passenger_count 
+        type: var_int
+      - id: passengers 
+        type: var_int 
+        repeat: expr 
+        repeat-expr: passenger_count.value
         
   cb_spawn_position: # 0x4E
     seq:
@@ -2956,4 +2982,10 @@ enums:
     1: sidebar
     2: below_name
     #3-18: team specific, depends on color
-
+  scoreboard_objective_mode:
+    0: create_scoreboard
+    1: remove_scoreboard
+    2: update_display_text
+  scoreboard_objective_type:
+    0: integer
+    1: hearts
