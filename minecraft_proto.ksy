@@ -346,7 +346,7 @@ types:
             0x17: cb_set_slot
             0x18: cb_set_cooldown
             0x19: csb_plugin_message
-            #0x1A
+            0x1A: cb_named_sound_effect
             0x1B: cb_disconnect
             0x1C: cb_entity_status
             0x1D: cb_explosion
@@ -720,6 +720,20 @@ types:
         type: u1
         repeat: expr
         repeat-expr: _parent._parent._parent.length.value - channel.len.value - channel.len.len - 2 # TODO!
+
+  cb_named_sound_effect: # 0x1A 
+    seq: # TODO: almost the same as "Sound effect", maybe move common part into structure?
+      - id: sound_id
+        type: string
+      - id: sound_category
+        type: var_int
+        # enum: sound_categories
+      - id: effect_position
+        type: vec3i_xyz
+      - id: volume
+        type: f4
+      - id: pitch
+        type: f4
 
   cb_disconnect: # 0x1B
     seq:
