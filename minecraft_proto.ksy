@@ -405,7 +405,7 @@ types:
             0x52: cb_sound_effect
             0x53: cb_stop_sound
             0x54: cb_player_list_header_and_footer
-            #0x55
+            0x55: cb_nbt_query_response
             0x56: cb_collect_item
             0x57: cb_entity_teleport
             0x58: cb_advancements
@@ -1275,6 +1275,13 @@ types:
         type: string
       - id: footer
         type: string
+        
+  cb_nbt_query_response: # 0x55
+    seq:
+      - id: transaction_id
+        type: var_int
+      - id: nbt
+        type: nbt
         
   cb_collect_item: # 0x56
     seq:
