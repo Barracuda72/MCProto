@@ -344,7 +344,7 @@ types:
             0x15: cb_window_items
             0x16: cb_window_property
             0x17: cb_set_slot
-            #0x18
+            0x18: cb_set_cooldown
             0x19: csb_plugin_message
             #0x1A
             0x1B: cb_disconnect
@@ -704,6 +704,13 @@ types:
         type: s2
       - id: data
         type: slot
+
+  cb_set_cooldown: # 0x18
+    seq:
+      - id: item_id
+        type: var_int
+      - id: cooldown_ticks
+        type: var_int
 
   csb_plugin_message: # 0x19 (cb), 0x0B (sb)
     seq:
