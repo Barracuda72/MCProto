@@ -324,7 +324,7 @@ types:
             0x01: cb_spawn_experience_orb
             0x02: cb_spawn_weather_entity
             0x03: cb_spawn_living_entity
-            #0x04
+            0x04: cb_spawn_painting
             0x05: cb_spawn_player
             0x06: cb_entity_animation
             0x07: cb_statistics
@@ -532,7 +532,22 @@ types:
         type: s2
       - id: velocity_z 
         type: s2
-        
+  
+  cb_spawn_painting: # 0x04
+    seq:
+      - id: entity_id 
+        type: var_int
+      - id: entity_uuid 
+        type: uuid
+      - id: motive 
+        type: var_int 
+        #enum: painting
+      - id: location 
+        type: position
+      - id: direction 
+        type: u1 
+        enum: painting_direction
+  
   cb_spawn_player: # 0x05
     seq:
       - id: entity_id
@@ -3110,4 +3125,35 @@ enums:
     12: jigsaw_block_data
     13: campfire_items
     14: beehive_information
-  
+  painting:
+    0:	kebab 
+    1:	aztec 
+    2:	alban 
+    3:	aztec2 
+    4:	bomb 
+    5:	plant 
+    6:	wasteland 
+    7:	pool 
+    8:	courbet 
+    9:	sea 
+    10:	sunset 
+    11:	creebet 
+    12:	wanderer 
+    13:	graham 
+    14:	match 
+    15:	bust 
+    16:	stage 
+    17:	void 
+    18:	skull_and_roses 
+    19:	wither 
+    20:	fighters 
+    21:	pointer 
+    22:	pigscene 
+    23:	burning_skull 
+    24:	skeleton 
+    25:	donkey_kong 
+  painting_direction:
+    0: south
+    1: west
+    2: north
+    3: east
