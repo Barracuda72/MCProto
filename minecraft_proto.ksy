@@ -340,7 +340,7 @@ types:
             0x11: cb_tab_complete
             0x12: cb_declare_commands
             0x13: csb_window_confirmation
-            #0x14
+            0x14: csb_close_window
             0x15: cb_window_items
             0x16: cb_window_property
             0x17: cb_set_slot
@@ -430,7 +430,7 @@ types:
             0x07: csb_window_confirmation
             #0x08
             0x09: sb_click_window
-            0x0A: sb_close_window
+            0x0A: csb_close_window
             0x0B: csb_plugin_message
             0x0C: sb_edit_book
             0x0D: sb_query_entity_nbt
@@ -665,6 +665,11 @@ types:
         type: s2
       - id: accepted 
         type: bool
+        
+  csb_close_window: # 0x14 (cb), 0x0A (sb)
+    seq:
+      - id: window_id
+        type: u1
         
   cb_window_items: # 0x15
     seq:
@@ -1269,11 +1274,6 @@ types:
         #enum: click_mode
       - id: item
         type: slot
-        
-  sb_close_window: # 0x0A
-    seq:
-      - id: window_id
-        type: u1
         
   sb_edit_book: # 0x0C
     seq:
