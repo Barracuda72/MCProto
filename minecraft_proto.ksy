@@ -325,7 +325,7 @@ types:
             0x02: cb_spawn_weather_entity
             0x03: cb_spawn_living_entity
             #0x04
-            #0x05
+            0x05: cb_spawn_player
             0x06: cb_entity_animation
             #0x07
             0x08: cb_acknowledge_digging
@@ -532,6 +532,19 @@ types:
         type: s2
       - id: velocity_z 
         type: s2
+        
+  cb_spawn_player: # 0x05
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: uuid
+        type: uuid
+      - id: location
+        type: vec3d_xyz
+      - id: yaw
+        type: angle
+      - id: pitch
+        type: angle
         
   cb_entity_animation: # 0x06
     seq:
