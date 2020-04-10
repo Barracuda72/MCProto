@@ -459,7 +459,7 @@ types:
             0x24: sb_update_command_block
             0x25: sb_update_command_minecart
             0x26: sb_creative_inventory_action
-            #0x27
+            0x27: sb_update_jigsaw_block
             #0x28
             #0x29
             0x2A: sb_animation
@@ -1417,6 +1417,17 @@ types:
         type: s2
       - id: item
         type: slot
+        
+  sb_update_jigsaw_block: # 0x27
+    seq:
+      - id: location
+        type: position
+      - id: attachment_type
+        type: string
+      - id: pool
+        type: string
+      - id: final_state
+        type: string
         
   sb_animation: # 0x2A
     seq:
