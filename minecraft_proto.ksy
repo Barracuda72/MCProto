@@ -401,7 +401,7 @@ types:
             0x4E: cb_spawn_position
             0x4F: cb_time_update
             #0x50
-            #0x51
+            0x51: cb_entity_sound_effect
             0x52: cb_sound_effect
             0x53: cb_stop_sound
             0x54: cb_player_list_header_and_footer
@@ -1242,7 +1242,21 @@ types:
         type: s8
       - id: time_of_day
         type: s8
-        
+  
+  cb_entity_sound_effect: # 0x51
+    seq:
+      - id: sound_id
+        type: var_int
+      - id: sound_category
+        type: var_int
+        # enum: sound_source
+      - id: entity_id
+        type: var_int
+      - id: volume
+        type: f4
+      - id: pitch
+        type: f4
+  
   cb_sound_effect: # 0x52
     seq:
       - id: sound_id
