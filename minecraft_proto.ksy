@@ -428,7 +428,7 @@ types:
             0x05: sb_client_settings
             0x06: sb_tab_complete
             0x07: csb_window_confirmation
-            #0x08
+            0x08: sb_click_window_button
             0x09: sb_click_window
             0x0A: csb_close_window
             0x0B: csb_plugin_message
@@ -1494,6 +1494,14 @@ types:
         type: var_int
       - id: text
         type: string # no more than 32500 bytes
+        
+  sb_click_window_button: # 0x08
+    seq:
+      - id: window_id
+        type: u1
+      - id: button_id
+        type: u1
+        #enum: many
         
   sb_click_window: # 0x09
     seq:
