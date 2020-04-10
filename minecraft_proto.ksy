@@ -352,7 +352,7 @@ types:
             0x1D: cb_explosion
             0x1E: cb_unload_chunk
             0x1F: cb_change_game_state
-            #0x20
+            0x20: cb_open_horse_window
             0x21: csb_keepalive
             0x22: cb_chunk_data
             0x23: cb_effect
@@ -774,6 +774,15 @@ types:
         enum: state_change_reason
       - id: value
         type: f4
+
+  cb_open_horse_window: # 0x20
+    seq: # TODO: description on wiki.vg is pretty vague
+      - id: window_id
+        type: u1 # ?
+      - id: number_of_slots
+        type: var_int # ?
+      - id: entity_id
+        type: s4 # ?
 
   csb_keepalive: # 0x21 (cb), 0x0F (sb)
     seq:
