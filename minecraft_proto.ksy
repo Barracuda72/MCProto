@@ -365,7 +365,7 @@ types:
             0x2A: cb_entity_position_and_rotation
             0x2B: cb_entity_rotation
             0x2C: cb_entity_movement
-            #0x2D
+            0x2D: csb_vehicle_move
             #0x2E
             0x2F: cb_open_window
             #0x30
@@ -441,7 +441,7 @@ types:
             0x12: sb_player_position_and_rotation
             0x13: sb_player_rotation
             0x14: sb_player_movement
-            0x15: sb_vehicle_move
+            0x15: csb_vehicle_move
             0x16: sb_steer_boat
             0x17: sb_pick_item
             0x18: sb_craft_recipe_request
@@ -932,6 +932,15 @@ types:
     seq:
       - id: entity_id
         type: var_int
+  
+  csb_vehicle_move: # 0x2D (cb), 0x15 (sb)
+    seq:
+      - id: position
+        type: vec3d_xyz
+      - id: yaw
+        type: f4
+      - id: pitch
+        type: f4
         
   cb_open_window: # 0x2F
     seq:
@@ -1378,15 +1387,6 @@ types:
     seq:
       - id: is_on_ground
         type: bool
-        
-  sb_vehicle_move: # 0x15
-    seq:
-      - id: position
-        type: vec3d_xyz
-      - id: yaw
-        type: f4
-      - id: pitch
-        type: f4
   
   sb_steer_boat: # 0x16
     seq:
