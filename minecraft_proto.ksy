@@ -381,9 +381,9 @@ types:
             0x3A: cb_resource_pack_send
             0x3B: cb_respawn
             0x3C: cb_entity_head_look
-            #0x3D
+            0x3D: cb_select_advancement_tab
             0x3E: cb_world_border
-            #0x3F
+            0x3F: cb_camera
             0x40: cb_held_item_change
             0x41: cb_update_view_position
             #0x42
@@ -1093,6 +1093,14 @@ types:
         type: var_int
       - id: head_yaw
         type: angle
+        
+  cb_select_advancement_tab: # 0x3D
+    seq:
+      - id: has_id 
+        type: bool
+      - id: identifier 
+        type: string 
+        if: has_id.value != 0
       
   cb_world_border: # 0x3E
     seq:
@@ -1117,6 +1125,11 @@ types:
       - id: warning_blocks
         type: var_int
         if: action.value == world_border_action::set_warning_blocks.to_i
+        
+  cb_camera: # 0x3F
+    seq:
+      - id: camera_id # entity ID
+        type: var_int
         
   cb_held_item_change: # 0x40
     seq:
