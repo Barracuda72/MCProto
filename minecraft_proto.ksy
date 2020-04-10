@@ -404,7 +404,7 @@ types:
             #0x51
             0x52: cb_sound_effect
             0x53: cb_stop_sound
-            #0x54
+            0x54: cb_player_list_header_and_footer
             #0x55
             0x56: cb_collect_item
             0x57: cb_entity_teleport
@@ -1268,6 +1268,13 @@ types:
       - id: sound_name
         type: string
         if: stop_sound_flags.has_name
+        
+  cb_player_list_header_and_footer: # 0x54
+    seq:
+      - id: header
+        type: string
+      - id: footer
+        type: string
         
   cb_collect_item: # 0x56
     seq:
