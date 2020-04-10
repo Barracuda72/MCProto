@@ -364,7 +364,7 @@ types:
             0x29: cb_entity_position
             0x2A: cb_entity_position_and_rotation
             0x2B: cb_entity_rotation
-            #0x2C
+            0x2C: cb_entity_movement
             #0x2D
             #0x2E
             0x2F: cb_open_window
@@ -927,6 +927,11 @@ types:
         type: angle
       - id: is_on_ground
         type: bool
+        
+  cb_entity_movement: # 0x2C
+    seq:
+      - id: entity_id
+        type: var_int
         
   cb_open_window: # 0x2F
     seq:
