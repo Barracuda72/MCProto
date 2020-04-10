@@ -389,7 +389,7 @@ types:
             0x42: cb_update_view_distance
             0x43: cb_display_scoreboard
             0x44: cb_entity_metadata
-            #0x45
+            0x45: cb_attach_entity
             0x46: cb_entity_velocity
             0x47: cb_entity_equipment
             0x48: cb_set_experience
@@ -1162,6 +1162,13 @@ types:
         type: var_int
       - id: metadata
         type: enity_metadata
+        
+  cb_attach_entity: # 0x45
+    seq:
+      - id: attached_entity_id
+        type: var_int
+      - id: holding_entity_id
+        type: var_int
         
   cb_entity_velocity: # 0x46
     seq:
