@@ -456,9 +456,9 @@ types:
             0x21: sb_select_trade
             0x22: sb_beacon_effect
             0x23: sb_held_item_change
-            #0x24
-            #0x25
-            #0x26
+            0x24: sb_update_command_block
+            0x25: sb_update_command_minecart
+            #0x26: 
             #0x27
             #0x28
             #0x29
@@ -1390,6 +1390,27 @@ types:
       - id: slot
         type: s2
         
+  sb_update_command_block: # 0x24
+    seq:
+      - id: location
+        type: position
+      - id: command
+        type: string # 32k limit
+      - id: mode
+        type: var_int
+        #enum: command_block_mode
+      - id: flags
+        type: command_block_flags
+        
+  sb_update_command_minecart: # 0x25
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: command
+        type: string
+      - id: track_output
+        type: bool
+        
   sb_animation: # 0x2A
     seq:
       - id: hand
@@ -2270,6 +2291,18 @@ types:
         type: s8
         if: achieved.value != 0
 
+### Command block
+  command_block_flags:
+    seq:
+      - id: reserved
+        type: b5
+      - id: automatic
+        type: b1
+      - id: conditional
+        type: b1
+      - id: track_output
+        type: b1
+
 ### Enums      
 
 enums:
@@ -2624,3 +2657,7 @@ enums:
   advancement_tab_action:
     0: opened_tab
     1: closed_screen
+  command_block_mode:
+    0: sequence
+    1: auto
+    2: redstone
