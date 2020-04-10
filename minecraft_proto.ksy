@@ -458,7 +458,7 @@ types:
             0x23: sb_held_item_change
             0x24: sb_update_command_block
             0x25: sb_update_command_minecart
-            #0x26: 
+            0x26: sb_creative_inventory_action
             #0x27
             #0x28
             #0x29
@@ -1410,6 +1410,13 @@ types:
         type: string
       - id: track_output
         type: bool
+  
+  sb_creative_inventory_action: # 0x26
+    seq:
+      - id: slot
+        type: s2
+      - id: item
+        type: slot
         
   sb_animation: # 0x2A
     seq:
