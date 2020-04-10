@@ -397,7 +397,7 @@ types:
             0x4A: cb_scoreboard_objective
             0x4B: cb_set_passengers
             #0x4C
-            #0x4D
+            0x4D: cb_update_score
             0x4E: cb_spawn_position
             0x4F: cb_time_update
             #0x50
@@ -1230,6 +1230,19 @@ types:
         type: var_int 
         repeat: expr 
         repeat-expr: passenger_count.value
+  
+  cb_update_score: # 0x4D
+    seq:
+      - id: entity_name
+        type: string # limited to 40 bytes
+      - id: action
+        type: u1
+        enum: score_update_action
+      - id: objective_name
+        type: string # limited to 16 bytes
+      - id: value
+        type: var_int
+        if: action != score_update_action::remove
         
   cb_spawn_position: # 0x4E
     seq:
@@ -3050,5 +3063,8 @@ enums:
     7:	player
     8:	ambient
     9:	voice
+  score_update_action:
+    0:  update
+    1:  remove
 
   
