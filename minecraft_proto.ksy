@@ -373,7 +373,7 @@ types:
             0x32: cb_player_abilities
             0x33: cb_combat_event
             0x34: cb_player_info
-            #0x35
+            0x35: cb_face_player
             0x36: cb_player_position_and_look
             0x37: cb_unlock_recipies
             0x38: cb_destroy_entities
@@ -1009,6 +1009,22 @@ types:
         type: player_info(action.value)
         repeat: expr
         repeat-expr: number_of_players.value
+    
+  cb_face_player: # 0x35
+    seq:
+      - id: aim_from
+        type: var_int
+        #enum: look_target
+      - id: target_position
+        type: vec3d_xyz
+      - id: is_entity
+        type: bool
+      - id: entity_id
+        type: var_int
+        if: is_entity.value != 0
+      - id: aim_to
+        type: var_int
+        if: is_entity.value != 0
         
   cb_player_position_and_look: # 0x36
     seq:
@@ -3066,5 +3082,7 @@ enums:
   score_update_action:
     0:  update
     1:  remove
-
+  look_target:
+    0: feet
+    1: eyes
   
