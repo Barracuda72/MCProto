@@ -378,8 +378,8 @@ types:
             0x37: cb_unlock_recipies
             0x38: cb_destroy_entities
             0x39: cb_remove_entity_effect
-            #0x3A
-            #0x3B
+            0x3A: cb_resource_pack_send
+            0x3B: cb_respawn
             0x3C: cb_entity_head_look
             #0x3D
             0x3E: cb_world_border
@@ -1065,6 +1065,27 @@ types:
       - id: effect_id
         type: u1
         enum: status_effect
+    
+  cb_resource_pack_send: # 0x3A
+    seq:
+      - id: url
+        type: string # limited to 32k bytes
+      - id: hash
+        type: string # limited to 40 bytes
+    
+  cb_respawn: # 0x3B
+    seq:
+      - id: dimension 
+        type: s4 
+        enum: dimension
+      - id: hashed_seed 
+        type: s8
+      - id: game_mode 
+        type: u1 
+        enum: game_mode
+      - id: level_type 
+        type: string
+        #enum: level_type
     
   cb_entity_head_look: # 0x3C
     seq:
