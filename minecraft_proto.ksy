@@ -329,7 +329,7 @@ types:
             0x06: cb_entity_animation
             0x07: cb_statistics
             0x08: cb_acknowledge_digging
-            #0x09
+            0x09: cb_block_break_animation
             #0x0A
             0x0B: cb_block_action
             0x0C: cb_block_change
@@ -576,6 +576,15 @@ types:
         #enum: player_digging_status
       - id: successful 
         type: bool
+  
+  cb_block_break_animation: # 0x09
+    seq:
+      - id: entity_id
+        type: var_int
+      - id: location
+        type: position
+      - id: destroy_stage
+        type: u1 # 0-9
 
   cb_block_action: # 0x0B
     seq:
