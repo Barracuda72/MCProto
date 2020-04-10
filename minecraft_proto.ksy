@@ -366,7 +366,7 @@ types:
             0x2B: cb_entity_rotation
             0x2C: cb_entity_movement
             0x2D: csb_vehicle_move
-            #0x2E
+            0x2E: cb_open_book
             0x2F: cb_open_window
             #0x30
             #0x31
@@ -941,6 +941,12 @@ types:
         type: f4
       - id: pitch
         type: f4
+  
+  cb_open_book: # 0x2E
+    seq:
+      - id: hand
+        type: var_int
+        #enum: hand
         
   cb_open_window: # 0x2F
     seq:
