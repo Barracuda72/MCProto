@@ -444,7 +444,7 @@ types:
             0x15: sb_vehicle_move
             0x16: sb_steer_boat
             0x17: sb_pick_item
-            #0x18
+            0x18: sb_craft_recipe_request
             #0x19
             0x1A: sb_player_digging
             0x1B: sb_entity_action
@@ -1316,6 +1316,15 @@ types:
     seq:
       - id: slot
         type: var_int
+        
+  sb_craft_recipe_request: # 0x18
+    seq:
+      - id: window_id 
+        type: u1
+      - id: recipe 
+        type: string
+      - id: make_all 
+        type: bool
         
   sb_player_digging: # 0x1A
     seq:
