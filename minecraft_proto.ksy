@@ -403,7 +403,7 @@ types:
             #0x50
             #0x51
             0x52: cb_sound_effect
-            #0x53
+            0x53: cb_stop_sound
             #0x54
             #0x55
             0x56: cb_collect_item
@@ -727,7 +727,7 @@ types:
         type: string
       - id: sound_category
         type: var_int
-        # enum: sound_categories
+        # enum: sound_source
       - id: effect_position
         type: vec3i_xyz
       - id: volume
@@ -1249,13 +1249,25 @@ types:
         type: var_int
       - id: sound_category
         type: var_int
-        # enum: sound_categories
+        # enum: sound_source
       - id: effect_position
         type: vec3i_xyz
       - id: volume
         type: f4
       - id: pitch
         type: f4
+        
+  cb_stop_sound: # 0x53
+    seq:
+      - id: stop_sound_flags
+        type: stop_sound_flags
+      - id: source
+        type: var_int
+        #enum: sound_source
+        if: stop_sound_flags.has_source
+      - id: sound_name
+        type: string
+        if: stop_sound_flags.has_name
         
   cb_collect_item: # 0x56
     seq:
@@ -2558,6 +2570,16 @@ types:
       - id: track_output
         type: b1
 
+### Misc
+  stop_sound_flags:
+    seq:
+      - id: reserved
+        type: b6
+      - id: has_name
+        type: b1
+      - id: has_source
+        type: b1
+
 ### Enums      
 
 enums:
@@ -2989,3 +3011,16 @@ enums:
   scoreboard_objective_type:
     0: integer
     1: hearts
+  sound_source:
+    0:	master
+    1:	music
+    2:	record
+    3:	weather
+    4:	block
+    5:	hostile
+    6:	neutral
+    7:	player
+    8:	ambient
+    9:	voice
+
+  
