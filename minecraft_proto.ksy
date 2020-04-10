@@ -460,7 +460,7 @@ types:
             0x25: sb_update_command_minecart
             0x26: sb_creative_inventory_action
             0x27: sb_update_jigsaw_block
-            #0x28
+            0x28: sb_update_structure_block
             0x29: sb_update_sign
             0x2A: sb_animation
             0x2B: sb_spectate
@@ -1729,6 +1729,37 @@ types:
         type: string
       - id: final_state
         type: string
+  
+  sb_update_structure_block: # 0x28
+    seq:
+      - id: location
+        type: position
+      - id: action
+        type: var_int 
+        #enum: update_structure_block_action
+      - id: mode
+        type: var_int 
+        #enum: update_structure_block_mode
+      - id: name 
+        type: string
+      - id: offset
+        type: vec3b_xyz
+      - id: size
+        type: vec3b_xyz
+      - id: mirror
+        type: var_int 
+        #enum: update_structure_block_mirror
+      - id: rotation
+        type: var_int 
+        #enum: update_structure_block_rotation
+      - id: metadata
+        type: string
+      - id: integrity
+        type: f4
+      - id: seed
+        type: var_long
+      - id: flags
+        type: update_structure_block_flags
         
   sb_update_sign: # 0x29
     seq:
@@ -2669,6 +2700,17 @@ types:
         type: b1
       - id: has_source
         type: b1
+        
+  update_structure_block_flags:
+    seq:
+      - id: reserved
+        type: b5
+      - id: show_bounding_box
+        type: b1
+      - id: show_air
+        type: b1
+      - id: ignore_entities
+        type: b1
 
 ### Enums      
 
@@ -3165,3 +3207,23 @@ enums:
     1: west
     2: north
     3: east
+  update_structure_block_action:
+    0: update_data
+    1: save_structure
+    2: load_structure
+    3: detect_size
+  update_structure_block_mode:
+    0: save
+    1: load
+    2: corner
+    3: data
+  update_structure_block_mirror:
+    0: none
+    1: left_right
+    2: front_back
+  update_structure_block_rotation:
+    0: none
+    1: clockwise_90
+    2: clockwise_180
+    3: counterclockwise_90
+    
