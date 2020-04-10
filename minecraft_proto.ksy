@@ -327,7 +327,7 @@ types:
             #0x04
             0x05: cb_spawn_player
             0x06: cb_entity_animation
-            #0x07
+            0x07: cb_statistics
             0x08: cb_acknowledge_digging
             #0x09
             #0x0A
@@ -553,6 +553,17 @@ types:
       - id: animation_id
         type: u1
         enum: entity_animation_id
+        
+  cb_statistics: # 0x07
+    seq:
+      - id: count
+        type: var_int
+      - id: statistics
+        type: statistic
+        repeat: expr
+        repeat-expr: count.value
+      - id: value
+        type: var_int
         
   cb_acknowledge_digging: # 0x08
     seq:
@@ -2357,6 +2368,15 @@ types:
         type: b1
       - id: jump
         type: b1
+        
+  statistic:
+    seq:
+      - id: category_id
+        type: var_int
+        #enum: statistic_category
+      - id: statistic_id
+        type: var_int
+        #enum: statistic_category_custom # Only for "custom" category
 
 ### Command block
 
@@ -2729,3 +2749,65 @@ enums:
     0: sequence
     1: auto
     2: redstone
+  statistic_category:
+    0: blocks_mined
+    1: items_crafted
+    2: items_used
+    3: items_broken
+    4: items_picked_up
+    5: items_dropped
+    6: entities_killed
+    7: entities_killed_by
+    8: custom
+  statistic_category_custom:
+    0:	leave_game 
+    1:	play_one_minute 
+    2:	time_since_death 
+    3:	sneak_time 
+    4:	walk_one_cm 
+    5:	crouch_one_cm 
+    6:	sprint_one_cm 
+    7:	swim_one_cm 
+    8:	fall_one_cm 
+    9:	climb_one_cm 
+    10:	fly_one_cm 
+    11:	dive_one_cm 
+    12:	minecart_one_cm 
+    13:	boat_one_cm 
+    14:	pig_one_cm 
+    15:	horse_one_cm 
+    16:	aviate_one_cm 
+    17:	jump 
+    18:	drop 
+    19:	damage_dealt 
+    20:	damage_taken 
+    21:	deaths 
+    22:	mob_kills 
+    23:	animals_bred 
+    24:	player_kills 
+    25:	fish_caught 
+    26:	talked_to_villager 
+    27:	traded_with_villager 
+    28:	eat_cake_slice 
+    29:	fill_cauldron 
+    30:	use_cauldron 
+    31:	clean_armor 
+    32:	clean_banner 
+    33:	interact_with_brewingstand 
+    34:	interact_with_beacon 
+    35:	inspect_dropper 
+    36:	inspect_hopper 
+    37:	inspect_dispenser 
+    38:	play_noteblock 
+    39:	tune_noteblock 
+    40:	pot_flower 
+    41:	trigger_trapped_chest 
+    42:	open_enderchest 
+    43:	enchant_item 
+    44:	play_record 
+    45:	interact_with_furnace 
+    46:	interact_with_crafting_table 
+    47:	open_chest 
+    48:	sleep_in_bed 
+    49:	open_shulker_box 
+
