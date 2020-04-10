@@ -445,7 +445,7 @@ types:
             0x16: sb_steer_boat
             0x17: sb_pick_item
             0x18: sb_craft_recipe_request
-            #0x19
+            0x19: sb_player_abilities
             0x1A: sb_player_digging
             0x1B: sb_entity_action
             0x1C: sb_steer_vehicle
@@ -996,17 +996,17 @@ types:
         type: string
         
   cb_player_abilities: # 0x32
-    seq:
-      - id: is_invulterable
-        type: b1
-      - id: is_flying
+    seq: # TODO: flags are VERY similar to those of SB version; bug in wiki.vg description?
+      - id: reserved
+        type: b4
+      - id: is_creative_mode
         type: b1
       - id: is_flying_allowed
         type: b1
-      - id: is_creative_mode
+      - id: is_flying
         type: b1
-      - id: reserved
-        type: b4
+      - id: is_invulnerable
+        type: b1
       - id: flying_speed
         type: f4
       - id: fov_modifier
@@ -1608,6 +1608,23 @@ types:
         type: string
       - id: make_all 
         type: bool
+  
+  sb_player_abilities: # 0x19
+    seq: # TODO: flags are VERY similar to CB version of the packet, maybe incorrect description at wiki.vg?
+      - id: reserved
+        type: b4
+      - id: is_invulnerable
+        type: b1
+      - id: is_flying_allowed
+        type: b1
+      - id: is_flying
+        type: b1
+      - id: is_creative_mode
+        type: b1
+      - id: flying_speed
+        type: f4
+      - id: walking_speed
+        type: f4
         
   sb_player_digging: # 0x1A
     seq:
