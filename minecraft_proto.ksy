@@ -461,7 +461,7 @@ types:
             0x26: sb_creative_inventory_action
             0x27: sb_update_jigsaw_block
             #0x28
-            #0x29
+            0x29: sb_update_sign
             0x2A: sb_animation
             0x2B: sb_spectate
             0x2C: sb_player_block_placement
@@ -1428,6 +1428,15 @@ types:
         type: string
       - id: final_state
         type: string
+        
+  sb_update_sign: # 0x29
+    seq:
+      - id: location
+        type: position
+      - id: lines
+        type: string # limited to 384 bytes
+        repeat: expr
+        repeat-expr: 4
         
   sb_animation: # 0x2A
     seq:
