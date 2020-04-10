@@ -330,7 +330,7 @@ types:
             0x07: cb_statistics
             0x08: cb_acknowledge_digging
             0x09: cb_block_break_animation
-            #0x0A
+            0x0A: cb_block_entity_data
             0x0B: cb_block_action
             0x0C: cb_block_change
             #0x0D
@@ -585,6 +585,16 @@ types:
         type: position
       - id: destroy_stage
         type: u1 # 0-9
+
+  cb_block_entity_data: # 0x0A
+    seq:
+      - id: location
+        type: position
+      - id: action
+        type: u1
+        enum: block_entity_data_action
+      - id: data
+        type: nbt
 
   cb_block_action: # 0x0B
     seq:
@@ -3085,4 +3095,19 @@ enums:
   look_target:
     0: feet
     1: eyes
+  block_entity_data_action:
+    1:  mob_spawner_data 
+    2:  command_block_text
+    3:  beacon_data
+    4:  mob_head_data
+    5:  conduit_declaration
+    6:  banner_data
+    7:  structure_tile_entity_data
+    8:  end_gateway_destination
+    9:  sign_text
+    10: unused
+    11: bed_declaration
+    12: jigsaw_block_data
+    13: campfire_items
+    14: behive_information
   
