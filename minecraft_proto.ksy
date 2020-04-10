@@ -368,8 +368,8 @@ types:
             0x2D: csb_vehicle_move
             0x2E: cb_open_book
             0x2F: cb_open_window
-            #0x30
-            #0x31
+            0x30: cb_open_sign_editor
+            0x31: cb_craft_recipe_response
             0x32: cb_player_abilities
             0x33: cb_combat_event
             0x34: cb_player_info
@@ -956,6 +956,18 @@ types:
         type: var_int
         #enum: window_type
       - id: window_title 
+        type: string
+        
+  cb_open_sign_editor: # 0x30
+    seq:
+      - id: location
+        type: position
+        
+  cb_craft_recipe_response: # 0x31
+    seq:
+      - id: window_id
+        type: u1
+      - id: recipe
         type: string
         
   cb_player_abilities: # 0x32
