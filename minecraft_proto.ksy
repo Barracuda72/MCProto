@@ -386,8 +386,8 @@ types:
             0x3F: cb_camera
             0x40: cb_held_item_change
             0x41: cb_update_view_position
-            #0x42
-            #0x43
+            0x42: cb_update_view_distance
+            0x43: cb_display_scoreboard
             0x44: cb_entity_metadata
             #0x45
             0x46: cb_entity_velocity
@@ -1142,6 +1142,19 @@ types:
         type: var_int
       - id: chunk_z
         type: var_int
+        
+  cb_update_view_distance: # 0x42
+    seq:
+      - id: view_distance
+        type: var_int
+        
+  cb_display_scoreboard: # 0x43
+    seq:
+      - id: position
+        type: u1
+        enum: scoreboard_position
+      - id: score_name
+        type: string # limited to 16 bytes
         
   cb_entity_metadata: # 0x44
     seq:
@@ -2931,4 +2944,9 @@ enums:
     47:	open_chest 
     48:	sleep_in_bed 
     49:	open_shulker_box 
+  scoreboard_position:
+    0: list
+    1: sidebar
+    2: below_name
+    #3-18: team specific, depends on color
 
