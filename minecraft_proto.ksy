@@ -3109,5 +3109,5 @@ enums:
     11: bed_declaration
     12: jigsaw_block_data
     13: campfire_items
-    14: behive_information
+    14: beehive_information
   
