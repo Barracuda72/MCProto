@@ -448,7 +448,7 @@ types:
             #0x19
             0x1A: sb_player_digging
             0x1B: sb_entity_action
-            #0x1C
+            0x1C: sb_steer_vehicle
             0x1D: sb_recipe_book_data
             0x1E: sb_name_item
             0x1F: sb_resource_pack_status
@@ -1337,6 +1337,15 @@ types:
         #enum: entity_action
       - id: jump_boost
         type: var_int
+        
+  sb_steer_vehicle: # 0x1C
+    seq:
+      - id: sideways
+        type: f4
+      - id: forward
+        type: f4
+      - id: flags
+        type: steer_vehicle_flags
         
   sb_recipe_book_data: # 0x1D
     seq:
@@ -2318,7 +2327,17 @@ types:
         type: s8
         if: achieved.value != 0
 
+  steer_vehicle_flags:
+    seq:
+      - id: reserved
+        type: b6
+      - id: unmount
+        type: b1
+      - id: jump
+        type: b1
+
 ### Command block
+
   command_block_flags:
     seq:
       - id: reserved
