@@ -400,7 +400,7 @@ types:
             0x4D: cb_update_score
             0x4E: cb_spawn_position
             0x4F: cb_time_update
-            #0x50
+            0x50: cb_title
             0x51: cb_entity_sound_effect
             0x52: cb_sound_effect
             0x53: cb_stop_sound
@@ -1336,6 +1336,23 @@ types:
         type: s8
       - id: time_of_day
         type: s8
+  
+  cb_title: # 0x50
+    seq:
+      - id: action
+        type: var_int
+        #enum: title_action
+      - id: title
+        type: string
+        if: action.value == title_action::set_title.to_i
+      - id: subtitle
+        type: string
+        if: action.value == title_action::set_subtitle.to_i
+      - id: action_bar
+        type: string
+        if: action.value == title_action::set_action_bar.to_i
+      - id: timings
+        type: title_timings
   
   cb_entity_sound_effect: # 0x51
     seq:
@@ -2830,6 +2847,15 @@ types:
       - id: demand
         type: s4
 
+  title_timings:
+    seq:
+      - id: fade_in 
+        type: s4
+      - id: stay 
+        type: s4
+      - id: fade_out 
+        type: s4
+
 ### Enums      
 
 enums:
@@ -3365,3 +3391,10 @@ enums:
     2:  notches_10
     3:  notches_12
     4:  notches_20
+  title_action:
+    0: set_title
+    1: set_subtitle
+    2: set_action_bar
+    3: set_timings
+    4: hide
+    5: reset
