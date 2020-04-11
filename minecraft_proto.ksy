@@ -360,7 +360,7 @@ types:
             0x25: cb_update_light
             0x26: cb_play_join_game
             #0x27
-            #0x28
+            0x28: cb_trade_list
             0x29: cb_entity_position
             0x2A: cb_entity_position_and_rotation
             0x2B: cb_entity_rotation
@@ -938,6 +938,25 @@ types:
       - id: reduced_debug_info 
         type: bool
       - id: enable_spawn_screen 
+        type: bool
+        
+  cb_trade_list: # 0x28
+    seq:
+      - id: window_id
+        type: var_int
+      - id: size
+        type: u1
+      - id: trades
+        type: trade
+        repeat: expr
+        repeat-expr: size
+      - id: villager_level
+        type: var_int
+      - id: experience
+        type: var_int
+      - id: is_regular_villager
+        type: bool
+      - id: can_restock
         type: bool
         
   cb_entity_position: # 0x29
@@ -2784,6 +2803,32 @@ types:
         type: b1
       - id: darken_sky
         type: b1
+
+  trade:
+    seq:
+      - id: input_item_1
+        type: slot
+      - id: output_item
+        type: slot
+      - id: has_second_item
+        type: bool
+      - id: input_item_2
+        type: slot
+        if: has_second_item.value != 0
+      - id: disabled
+        type: bool
+      - id: number_of_uses
+        type: s4
+      - id: maximum_number_of_uses
+        type: s4
+      - id: experience
+        type: s4
+      - id: special_price
+        type: s4
+      - id: price_multiplier
+        type: f4
+      - id: demand
+        type: s4
 
 ### Enums      
 
