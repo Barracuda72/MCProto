@@ -396,7 +396,7 @@ types:
             0x49: cb_update_health
             0x4A: cb_scoreboard_objective
             0x4B: cb_set_passengers
-            #0x4C
+            0x4C: cb_teams
             0x4D: cb_update_score
             0x4E: cb_spawn_position
             0x4F: cb_time_update
@@ -1345,6 +1345,46 @@ types:
         repeat: expr 
         repeat-expr: passenger_count.value
   
+  cb_teams: # 0x4C
+    seq:
+      - id: team_name
+        type: string # limit 16 bytes
+      - id: mode
+        type: s1
+        enum: teams_mode
+      - id: display_name
+        type: string
+        if: mode == teams_mode::create or mode == teams_mode::update
+      - id: friendly_flags
+        type: team_friendly_flags
+        if: mode == teams_mode::create or mode == teams_mode::update
+      - id: name_tag_visibility
+        type: string 
+        #enum: name_tag_visibility
+        if: mode == teams_mode::create or mode == teams_mode::update
+      - id: collision_rule
+        type: string 
+        #enum: team_collision_rule
+        if: mode == teams_mode::create or mode == teams_mode::update
+      - id: color
+        type: var_int 
+        #enum: team_color
+        if: mode == teams_mode::create or mode == teams_mode::update
+      - id: prefix
+        type: string
+        if: mode == teams_mode::create or mode == teams_mode::update
+      - id: suffix
+        type: string
+        if: mode == teams_mode::create or mode == teams_mode::update
+      - id: entity_count
+        type: var_int
+        if: mode == teams_mode::create or mode == teams_mode::add_players or mode == teams_mode::remove_players
+      - id: entities
+        type: string
+        if: mode == teams_mode::create or mode == teams_mode::add_players or mode == teams_mode::remove_players
+        repeat: expr
+        repeat-expr: entity_count.value
+      
   cb_update_score: # 0x4D
     seq:
       - id: entity_name
@@ -2910,6 +2950,16 @@ types:
         type: string
         if: has_display_name.value != 0
 
+  team_friendly_flags:
+    seq:
+      - id: reserved
+        type: b6
+        valid: '0b000000'
+      - id: see_invisible
+        type: b1
+      - id: friendly_fire
+        type: b1
+
 ### Enums      
 
 enums:
@@ -3452,3 +3502,21 @@ enums:
     3: set_timings
     4: hide
     5: reset
+  teams_mode:
+    0: create
+    1: remove
+    2: update
+    3: add_players
+    4: remove_players
+  #name_tag_visibility:
+    # always, hideForOtherTeams, hideForOwnTeam, never
+  #team_collision_rule:
+    # always, pushOtherTeams, pushOwnTeam, never
+  team_color:
+    #0-15 	Color formatting, same values as Chat colors.
+    16: obfuscated
+    17: bold
+    18: strikethrough
+    19: underlined
+    20: italic
+    21: reset
