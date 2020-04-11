@@ -359,7 +359,7 @@ types:
             0x24: cb_particle
             0x25: cb_update_light
             0x26: cb_play_join_game
-            #0x27
+            0x27: cb_map_data
             0x28: cb_trade_list
             0x29: cb_entity_position
             0x2A: cb_entity_position_and_rotation
@@ -939,7 +939,40 @@ types:
         type: bool
       - id: enable_spawn_screen 
         type: bool
-        
+  
+  cb_map_data: # 0x27
+    seq:
+      - id: map_id
+        type: var_int
+      - id: scale
+        type: s1
+      - id: tracking_position
+        type: bool
+      - id: locked
+        type: bool
+      - id: icon_count
+        type: var_int
+      - id: icons
+        type: map_icon
+        repeat: expr
+        repeat-expr: icon_count.value
+      - id: columns
+        type: u1
+      - id: rows
+        type: s1
+        if: columns != 0
+      - id: offset
+        type: vec2b_xz
+        if: columns != 0
+      - id: length
+        type: var_int
+        if: columns != 0
+      - id: data
+        type: u1
+        if: columns != 0
+        repeat: expr
+        repeat-expr: length.value
+  
   cb_trade_list: # 0x28
     seq:
       - id: window_id
@@ -1912,6 +1945,13 @@ types:
       - id: value
         type: u1
         
+  vec2b_xz:
+    seq:
+      - id: x
+        type: s1
+      - id: y
+        type: s1
+  
   vec2f_xy:
     seq:
       - id: x
@@ -2855,6 +2895,20 @@ types:
         type: s4
       - id: fade_out 
         type: s4
+
+  map_icon:
+    seq:
+      - id: type
+        type: var_int
+      - id: coords
+        type: vec2b_xz
+      - id: direction
+        type: s1
+      - id: has_display_name
+        type: bool
+      - id: display_name
+        type: string
+        if: has_display_name.value != 0
 
 ### Enums      
 
