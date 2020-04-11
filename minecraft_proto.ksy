@@ -999,6 +999,7 @@ types:
     seq: # TODO: flags are VERY similar to those of SB version; bug in wiki.vg description?
       - id: reserved
         type: b4
+        valid: '0b0000'
       - id: is_creative_mode
         type: b1
       - id: is_flying_allowed
@@ -1613,6 +1614,7 @@ types:
     seq: # TODO: flags are VERY similar to CB version of the packet, maybe incorrect description at wiki.vg?
       - id: reserved
         type: b4
+        valid: '0b0000'
       - id: is_invulnerable
         type: b1
       - id: is_flying_allowed
@@ -2110,6 +2112,7 @@ types:
     seq:
       - id: reserved 
         type: b3
+        valid: '0b000'
       - id: has_suggestions 
         type: b1
       - id: has_redirect 
@@ -2154,6 +2157,7 @@ types:
         type: b1
       - id: reserved
         type: b6
+        valid: '0b000000'
       - id: min
         type: f8
         if: min_present
@@ -2169,6 +2173,7 @@ types:
         type: b1
       - id: reserved
         type: b6
+        valid: '0b000000'
       - id: min
         type: f4
         if: min_present
@@ -2184,6 +2189,7 @@ types:
         type: b1
       - id: reserved
         type: b6
+        valid: '0b000000'
       - id: min
         type: s4
         if: min_present
@@ -2201,6 +2207,7 @@ types:
     seq: 
       - id: reserved
         type: b6
+        valid: '0b000000'
       - id: allow_players_only
         type: b1
       - id: allow_single_entity
@@ -2211,6 +2218,7 @@ types:
     seq:
       - id: reserved
         type: b7
+        valid: '0b0000000'
       - id: allow_multiple
         type: b1
     
@@ -2295,6 +2303,7 @@ types:
         type: b1
       - id: reserved
         type: b3
+        valid: '0b000'
       
   light_array:
     seq:
@@ -2512,6 +2521,7 @@ types:
     seq:
       - id: reserved
         type: b1
+        #valid: '0b0'
       - id: hat_enabled
         type: b1
       - id: right_leg_enabled
@@ -2558,6 +2568,7 @@ types:
     seq:
       - id: reserved
         type: b5
+        valid: '0b00000'
       - id: show_icon 
         type: b1
       - id: show_particles 
@@ -2569,6 +2580,7 @@ types:
     seq:
       - id: reserved
         type: b6
+        valid: '0b000000'
       - id: unmount
         type: b1
       - id: jump
@@ -2655,6 +2667,7 @@ types:
     seq:
       - id: reserved
         type: b29
+        valid: '0b0000_0000_0000_0000_0000_0000_0000_0'
       - id: hidden
         type: b1
       - id: show_toast
@@ -2701,6 +2714,7 @@ types:
     seq:
       - id: reserved
         type: b5
+        valid: '0b00000'
       - id: automatic
         type: b1
       - id: conditional
@@ -2713,6 +2727,7 @@ types:
     seq:
       - id: reserved
         type: b6
+        valid: '0b000000'
       - id: has_name
         type: b1
       - id: has_source
