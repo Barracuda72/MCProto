@@ -333,7 +333,7 @@ types:
             0x0A: cb_block_entity_data
             0x0B: cb_block_action
             0x0C: cb_block_change
-            #0x0D
+            0x0D: cb_boss_bar
             0x0E: cb_server_difficulty
             0x0F: cb_chat_message
             0x10: cb_multi_block_change
@@ -628,6 +628,26 @@ types:
         type: position
       - id: block_id
         type: var_int
+        
+  cb_boss_bar: # 0x0D
+    seq:
+      - id: uuid
+        type: uuid
+      - id: action
+        type: var_int
+        #enum: boss_bar_action
+      - id: title 
+        type: string 
+        if: action.value == boss_bar_action::add.to_i or action.value == boss_bar_action::update_title.to_i
+      - id: health 
+        type: f4 
+        if: action.value == boss_bar_action::add.to_i or action.value == boss_bar_action::update_title.to_i
+      - id: style 
+        type: boss_bar_style 
+        if: action.value == boss_bar_action::add.to_i or action.value == boss_bar_action::update_title.to_i
+      - id: flags 
+        type: boss_bar_flags 
+        if: action.value == boss_bar_action::add.to_i or action.value == boss_bar_action::update_title.to_i
 
   cb_server_difficulty: # 0x0E
     seq:
@@ -2744,6 +2764,27 @@ types:
       - id: ignore_entities
         type: b1
 
+  boss_bar_style:
+    seq:
+      - id: color 
+        type: var_int 
+        #enum: boss_bar_color
+      - id: division 
+        type: var_int 
+        #enum: boss_bar_division
+
+  boss_bar_flags:
+    seq:
+      - id: reserved
+        type: b5
+        valid: '0b00000'
+      - id: create_fog
+        type: b1
+      - id: is_dragon_bar
+        type: b1
+      - id: darken_sky
+        type: b1
+
 ### Enums      
 
 enums:
@@ -3258,4 +3299,24 @@ enums:
     1: clockwise_90
     2: clockwise_180
     3: counterclockwise_90
-    
+  boss_bar_action:
+    0: add
+    1: remove
+    2: update_health
+    3: update_title
+    4: update_style
+    5: update_flags
+  boss_bar_color:
+    0:  pink
+    1:  blue
+    2:  red
+    3:  green
+    4:  yellow
+    5:  purple
+    6:  white 
+  boss_bar_division:
+    0:  no_division
+    1:  notches_6
+    2:  notches_10
+    3:  notches_12
+    4:  notches_20
